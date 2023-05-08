@@ -1,0 +1,33 @@
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /* font */
+}
+
+.home, .customer, .staff{
+  display: flex;
+  margin: 175px;
+  margin-top: 25px;
+  padding: 100px;
+  /* height: 60vh; */
+  /* border-style: solid; */
+  align-items: left;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.mb-3{
+  display: flex;
+  align-items: row;
+}
+
+label{
+  width: 150px;
+}
+
+.form-control {
+  width: 400px;
+}
