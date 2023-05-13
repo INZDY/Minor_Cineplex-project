@@ -6,7 +6,7 @@
   /* font */
 }
 
-.home, .customer, .staff{
+.home, .customer, .staff, .branch, .theatre{
   display: flex;
   margin: 175px;
   margin-top: 25px;
