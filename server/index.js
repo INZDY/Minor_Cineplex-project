@@ -224,7 +224,70 @@ app.delete("/delete_branch/:id", (req, res) => {
     }
   });
 });
-//BRANCH/////////////////////////////////////////////////////////////////////////
+//BRANCH////////////////////////////////////////////////////////////////////////
+
+//THEATRE///////////////////////////////////////////////////////////////////////
+app.get("/theatre", (req, res) => {
+  db.query("SELECT * FROM theatre", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/add_theatre", (req, res) => {
+  const theatre_no = req.body.theatre_no;
+  const branch_id = req.body.branch_id;
+  const capacity = req.body.capacity;
+  const type = req.body.theatre_type;
+  console.log(res);
+
+  db.query(
+    "INSERT INTO theatre (theatre_no, branch_id, capacity, theatre_type) VALUES (?,?,?,?)",
+    [theatre_no, branch_id, capacity, type],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("Values Inserted");
+      }
+    }
+  );
+});
+
+app.put("/edit_theatre", (req, res) => {
+  const id = req.body.theatre_id;
+  const theatre_no = req.body.theatre_no;
+  const branch_id = req.body.branch_id;
+  const capacity = req.body.capacity;
+  const type = req.body.theatre_type;
+
+  db.query(
+    "UPDATE theatre SET theatre_no = ?, branch_id = ?, capacity = ?, theatre_type = ? WHERE theatre_id = ?",
+    [theatre_no, branch_id, capacity, type, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.delete("/delete_theatre/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("DELETE FROM theatre WHERE theatre_id = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+//THEATRE///////////////////////////////////////////////////////////////////////
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");

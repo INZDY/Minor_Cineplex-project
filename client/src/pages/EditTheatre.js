@@ -14,8 +14,8 @@ function UpdateButton(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const editBranch = (id) => {
-    Axios.put("http://localhost:3001/edit_branch", {
+  const editTheatre = (id) => {
+    Axios.put("http://localhost:3001/edit_theatre", {
       theatre_id: id,
       theatre_no: no,
       branch_id: branchID,
@@ -104,7 +104,7 @@ function UpdateButton(props) {
           <Button
             variant="primary"
             onClick={() => {
-              editBranch(props.id);
+              editTheatre(props.id);
             }}
           >
             Save Changes
