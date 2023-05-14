@@ -6,7 +6,7 @@
   /* font */
 }
 
-.home, .customer, .staff, .branch, .theatre{
+.home, .customer, .staff, .branch, .theatre, .memtype{
   display: flex;
   margin: 175px;
   margin-top: 25px;

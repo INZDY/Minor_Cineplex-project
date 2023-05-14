@@ -37,8 +37,8 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
-        title: 'Seat',
-        path: '/seat',
+        title: 'Member Type',
+        path: '/memtype',
         icon: <AiIcons.AiFillHome />,
         cName: 'nav-text'
     }

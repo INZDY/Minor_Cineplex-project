@@ -289,6 +289,65 @@ app.delete("/delete_theatre/:id", (req, res) => {
 });
 //THEATRE///////////////////////////////////////////////////////////////////////
 
+//MEMTYPE///////////////////////////////////////////////////////////////////////
+app.get("/memtype", (req, res) => {
+  db.query("SELECT * FROM membertype", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/add_memtype", (req, res) => {
+  const name = req.body.type_name;
+  const price = req.body.discount_price;
+  console.log(res);
+
+  db.query(
+    "INSERT INTO membertype (type_name, discount_price) VALUES (?,?)",
+    [name, price],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("Values Inserted");
+      }
+    }
+  );
+});
+
+app.put("/edit_memtype/:old_name", (req, res) => {
+  const old_name = req.params.old_name;
+  const name = req.body.type_name;
+  const price = req.body.discount_price;
+
+  db.query(
+    "UPDATE membertype SET type_name = ?, discount_price = ? WHERE type_name = ?",
+    [name, price, old_name],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.delete("/delete_memtype/:name", (req, res) => {
+  const name = req.params.name;
+  db.query("DELETE FROM membertype WHERE type_name = ?", name, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+//MEMTYPE///////////////////////////////////////////////////////////////////////
+
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
 });

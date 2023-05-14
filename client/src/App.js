@@ -6,6 +6,7 @@ import Customer from "./pages/Customer.js";
 import Staff from './pages/Staff.js'
 import Branch from "./pages/Branch.js";
 import Theatre from "./pages/Theatre.js";
+import Memtype from "./pages/Memtype.js";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/staff" element={<Staff />} />
           <Route path="/branch" element={<Branch />} />
           <Route path="/theatre" element={<Theatre />} />
+          <Route path="/memtype" element={<Memtype />} />
         </Routes>
       </Router>
     </>
