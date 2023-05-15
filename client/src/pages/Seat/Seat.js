@@ -82,10 +82,12 @@ function Seat() {
 
       getSeats();
       let currentSeatID = Math.max(seatList.map((item) => item.seat_id));
+      let currentPrice = Math.max(seatList.map((item) => item.seat_id));
+
 
       Axios.post("http://localhost:3001/add_seathistory", {
         seat_id: currentSeatID,
-        date: input["date"],
+        date: date,
         price_before: seatList["price_after"],
         price_after: input["price"],
         staff_id: input["staff"],
