@@ -113,7 +113,19 @@ app.post("/add_staff", (req, res) => {
 
   db.query(
     "INSERT INTO staff (staff_fname, staff_lname, position, salary, branch_id, staff_email, staff_tel, staff_citizen_id, staff_address, staff_gender, staff_DOB) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-    [fname, lname, position, salary, branchID, email, tel, citizenID, address, gender, DOB],
+    [
+      fname,
+      lname,
+      position,
+      salary,
+      branchID,
+      email,
+      tel,
+      citizenID,
+      address,
+      gender,
+      DOB,
+    ],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -140,7 +152,20 @@ app.put("/edit_staff", (req, res) => {
 
   db.query(
     "UPDATE staff SET staff_fname = ?, staff_lname = ?, position = ?, salary = ?, branch_id = ?, staff_email = ?, staff_tel = ?, staff_citizen_id = ?, staff_address = ?, staff_gender = ?, staff_DOB = ? WHERE staff_id = ?",
-    [fname, lname, position, salary, branchID, email, tel, citizenID, address, gender, DOB, id],
+    [
+      fname,
+      lname,
+      position,
+      salary,
+      branchID,
+      email,
+      tel,
+      citizenID,
+      address,
+      gender,
+      DOB,
+      id,
+    ],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -338,7 +363,24 @@ app.put("/edit_memtype/:old_name", (req, res) => {
 
 app.delete("/delete_memtype/:name", (req, res) => {
   const name = req.params.name;
-  db.query("DELETE FROM membertype WHERE type_name = ?", name, (err, result) => {
+  db.query(
+    "DELETE FROM membertype WHERE type_name = ?",
+    name,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+//MEMTYPE///////////////////////////////////////////////////////////////////////
+
+//SEAT DETAILS//////////////////////////////////////////////////////////////////
+// get
+app.get("/seatdetails", (req, res) => {
+  db.query("SELECT * FROM seatdetails", (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -346,8 +388,101 @@ app.delete("/delete_memtype/:name", (req, res) => {
     }
   });
 });
-//MEMTYPE///////////////////////////////////////////////////////////////////////
 
+app.get("/seathistory", (req, res) => {
+  db.query(
+    "SELECT t1.* FROM seatpricehistory t1 JOIN (SELECT seat_id, MAX(date) AS max_date FROM seatpricehistory GROUP BY seat_id) t2 ON t1.seat_id = t2.seat_id AND t1.date = t2.max_date ORDER BY seat_id",
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//add
+app.post("/add_seatdetails", (req, res) => {
+  const seatNO = req.body.seat_no;
+  const theatreID = req.body.theatre_id;
+  const type = req.body.seat_type;
+
+  //insert as a new seat if it is not already present
+  db.query(
+    "INSERT INTO seatdetails (seat_no, theatre_id, seat_type) SELECT ?,?,? WHERE NOT EXISTS (SELECT 1 FROM seatdetails WHERE seat_no = ? AND theatre_id = ?)",
+    [seatNO, theatreID, type, seatNO, theatreID],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("Values Inserted");
+      }
+    }
+  );
+});
+
+app.post("/add_seathistory", (req, res) => {
+  const seatID = req.body.seat_id;
+  const date = req.body.date;
+  const price_before = req.body.price_before;
+  const price_after = req.body.price_after;
+  const staffID = req.body.staff_id;
+
+  //insert only if before != after
+  db.query(
+    "INSERT INTO seatpricehistory (seat_id, date, price_before, price_after, staff_id) SELECT ?,?,?,?,? WHERE ? <> ?",
+    [
+      seatID,
+      date,
+      price_before,
+      price_after,
+      staffID,
+      price_before,
+      price_after,
+    ],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("Values Inserted");
+      }
+    }
+  );
+});
+
+//edit
+app.put("/edit_sd", (req, res) => {
+  const id = req.body.sd_id;
+  const sd_no = req.body.sd_no;
+  const branch_id = req.body.branch_id;
+  const capacity = req.body.capacity;
+  const type = req.body.sd_type;
+
+  db.query(
+    "UPDATE sd SET sd_no = ?, branch_id = ?, capacity = ?, sd_type = ? WHERE sd_id = ?",
+    [sd_no, branch_id, capacity, type, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.delete("/delete_sd/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("DELETE FROM sd WHERE sd_id = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+//SEAT DETAILS//////////////////////////////////////////////////////////////////
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
 });

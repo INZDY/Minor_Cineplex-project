@@ -194,7 +194,7 @@ function UpdateButton(props) {
               Date of Birth
             </label>
             <input
-              type="text"
+              type="date"
               className="form-control"
               value={DOB}
               onChange={(event) => {

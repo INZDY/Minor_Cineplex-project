@@ -160,7 +160,7 @@ function Customer() {
               Date of Birth:
             </label>
             <input
-              type="text"
+              type="date"
               className="form-control"
               placeholder="yyyy/mm/dd"
               onChange={(event) => {

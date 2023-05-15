@@ -7,6 +7,7 @@ import Staff from './pages/Staff/Staff.js'
 import Branch from "./pages/Branch/Branch.js";
 import Theatre from "./pages/Theatre/Theatre.js";
 import Memtype from "./pages/MemberType/Memtype.js";
+import Seat from "./pages/Seat/Seat.js";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/branch" element={<Branch />} />
           <Route path="/theatre" element={<Theatre />} />
           <Route path="/memtype" element={<Memtype />} />
+          <Route path="/seat" element={<Seat />} />
         </Routes>
       </Router>
     </>

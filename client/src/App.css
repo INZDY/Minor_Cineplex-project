@@ -6,7 +6,7 @@
   /* font */
 }
 
-.home, .customer, .staff, .branch, .theatre, .memtype{
+.home, .customer, .staff, .branch, .theatre, .memtype, .seat{
   display: flex;
   margin: 175px;
   margin-top: 25px;
@@ -30,4 +30,9 @@ label{
 
 .form-control {
   width: 400px;
+}
+
+.multi-row{
+  width: 134px;
+  margin-right: 16px;
 }

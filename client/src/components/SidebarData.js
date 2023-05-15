@@ -46,8 +46,8 @@ export const SidebarData = [
         cName: 'nav-text'
     },
     {
-        title: 'Seat Detail',
-        path: '/seatdetail',
+        title: 'Seat',
+        path: '/seat',
         icon: <MdIcons.MdEventSeat />,
         cName: 'nav-text'
     }
