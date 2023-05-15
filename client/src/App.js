@@ -2,11 +2,11 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.js";
-import Customer from "./pages/Customer.js";
-import Staff from './pages/Staff.js'
-import Branch from "./pages/Branch.js";
-import Theatre from "./pages/Theatre.js";
-import Memtype from "./pages/Memtype.js";
+import Customer from "./pages/Customer/Customer.js";
+import Staff from './pages/Staff/Staff.js'
+import Branch from "./pages/Branch/Branch.js";
+import Theatre from "./pages/Theatre/Theatre.js";
+import Memtype from "./pages/MemberType/Memtype.js";
 
 function App() {
   return (

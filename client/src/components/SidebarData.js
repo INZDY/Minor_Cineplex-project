@@ -3,6 +3,9 @@
 import React from 'react'
 // import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
+import * as BiIcons from "react-icons/bi"
+import * as GiIcons from "react-icons/gi"
+import * as MdIcons from "react-icons/md"
 // import * as IoIcons from "react-icons/io";
 
 export const SidebarData = [
@@ -15,31 +18,37 @@ export const SidebarData = [
     {
         title: 'Customer',
         path: '/customer',
-        icon: <AiIcons.AiFillHome />,
+        icon: <AiIcons.AiOutlineUser />,
         cName: 'nav-text'
     },
     {
         title: 'Staff',
         path: '/staff',
-        icon: <AiIcons.AiFillHome />,
+        icon: <BiIcons.BiSupport/>,
         cName: 'nav-text'
     },
     {
         title: 'Branch',
         path: '/branch',
-        icon: <AiIcons.AiFillHome />,
+        icon: <BiIcons.BiGitBranch />,
         cName: 'nav-text'
     },
     {
         title: 'Theatre',
         path: '/theatre',
-        icon: <AiIcons.AiFillHome />,
+        icon: <GiIcons.GiTheater />,
         cName: 'nav-text'
     },
     {
         title: 'Member Type',
         path: '/memtype',
-        icon: <AiIcons.AiFillHome />,
+        icon: <MdIcons.MdHotelClass />,
+        cName: 'nav-text'
+    },
+    {
+        title: 'Seat Detail',
+        path: '/seatdetail',
+        icon: <MdIcons.MdEventSeat />,
         cName: 'nav-text'
     }
 ]
