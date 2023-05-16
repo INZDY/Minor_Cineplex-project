@@ -35,78 +35,55 @@ function MovRegis() {
   };
   /////
 
-
-  const handleInsertion = () => {
-
-  }
-
-  const getMovies = async () => {
-    try {
-      console.log('try')
-      //Get ALL Movies
-      await Axios.get("http://localhost:3001/movielist").then((response) => {
-        setMovList(response.data);
-        // console.log(movList)
-      });
-  
-      //Get GENRES
-      await Axios.get("http://localhost:3001/moviegenre").then((response) => {
-        setMovGenre(response.data);
-        // console.log(movGenre)
-      });
-  
-      //MOVIES + GENRES
-      let movie_genres = movList.map((mov) => {
-        const matching_genres = movGenre
-          .filter((genre) => genre.movie_id === mov.movie_id)
-          .map((item) => item.genre);
-        return { ...mov, genre: matching_genres };
-      });
-  
-      // console.log(movie_genres)
-      setMovies(movie_genres);
-      // console.log(movies)
-
-    }catch(error){
-      console.error('Error', error);
-    }
-  };
-
-  // const getPK = async (data) => {
-  //   try{
-  //     const response = await Axios.post("http://localhost:3001/add_movies", data)
-  //     const id = response.data.movie_id
-  //     return id
-  //   } catch (error){
-  //     console.error('Error')
-  //   }
-  // }
-
-  const addMovies = (movies) => {
-    const data = {
-      title: title,
-      content_rating: crating,
-      length: length,
-      score_rating: srating,
-      times_aired: 0,
-      movie_status: null,
-    };
-    // const id = getPK(data)
-    Axios.post("http://localhost:3001/add_movies", data).then((response) => {
-      return response;
+  const getMovies = () => {
+    console.log("try");
+    //Get ALL Movies
+    Axios.get("http://localhost:3001/movielist").then((response) => {
+      setMovList(response.data);
+      // console.log(movList)
     });
 
-    console.log(movies);
-    const currentID = Math.max(...movies.map((item) => item.movie_id)) + 1;
-    console.log(currentID);
+    //Get GENRES
+    Axios.get("http://localhost:3001/moviegenre").then((response) => {
+      setMovGenre(response.data);
+      // console.log(movGenre)
+    });
 
-    // genre.map((val) => {
-    //   Axios.post("http://localhost:3001/add_moviegenre", {
-    //     movie_id : id,
-    //     genre : val
-    //   })
-    // })
+    //MOVIES + GENRES
+    let movie_genres = movList.map((mov) => {
+      const matching_genres = movGenre
+        .filter((genre) => genre.movie_id === mov.movie_id)
+        .map((item) => item.genre);
+      return { ...mov, genre: matching_genres };
+    });
+
+    // console.log(movie_genres)
+    setMovies(movie_genres);
+    // console.log(movies)
   };
+
+  const addMovies = async () => {
+    try{
+      const data = {
+            title: title,
+            content_rating: crating,
+            length: length,
+            score_rating: srating,
+            times_aired: 0,
+            movie_status: null,
+          };
+      const response1 = await Axios.post("http://localhost:3001/add_movies", data)
+      const ID = response1.data.insertId
+      console.log(ID)
+
+      genre.map(async (val) => {await Axios.post("http://localhost:3001/add_moviegenre",{
+        movie_id: ID,
+        genre: val
+      })})
+    } catch(error){
+      console.error('Error:', error)
+    }
+  }
 
   const deleteMovies = () => {};
 
@@ -195,9 +172,7 @@ function MovRegis() {
           <button
             type="button"
             className="btn btn-success"
-            onClick={() => {
-              addMovies(movies);
-            }}
+            onClick={addMovies}
           >
             Add Movies
           </button>
@@ -214,7 +189,7 @@ function MovRegis() {
           return (
             <div className="moviess card">
               <div className="card-body text-left">
-                <p className="card-text">Movie ID: {val["movies_id"]}</p>
+                <p className="card-text">Movie ID: {val["movie_id"]}</p>
                 <p className="card-text">Title: {val["title"]}</p>
                 <p className="card-text">
                   Content rating: {val["content_rating"]}
@@ -223,6 +198,7 @@ function MovRegis() {
                 <p className="card-text">Score Rating: {val["score_rating"]}</p>
                 <p className="card-text">Movie Status: {val["movie_status"]}</p>
                 <p className="card-text">Times Aired: {val["times_aired"]}</p>
+                <p className="card-text">Genre: {val["genre"].join(", ")}</p>
                 <br />
 
                 {/* UPDATE BUTTON */}

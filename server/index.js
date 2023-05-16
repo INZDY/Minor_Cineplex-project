@@ -507,47 +507,50 @@ app.get("/moviegenre", (req, res) => {
 });
 
 //add
-app.post("/add_movies", (req, res) => {
-  const title = req.body.title;
-  const crating = req.body.content_rating;
-  const length = req.body.length;
-  const srating = req.body.score_rating;
-  const times_aired = req.body.times_aired;
-  const movie_status = req.body.movie_status;
-  console.log(res)
+app.post("/add_movies", async (req, res) => {
+  try {
+    const title = req.body.title;
+    const crating = req.body.content_rating;
+    const length = req.body.length;
+    const srating = req.body.score_rating;
+    const times_aired = req.body.times_aired;
+    const movie_status = req.body.movie_status;
+    console.log(res);
 
-  db.query(
-    "INSERT INTO movies (title, content_rating, length, score_rating, times_aired, movie_status) VALUES (?,?,?,?,?,?)",
-    [title, crating, length, srating, times_aired, movie_status],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
+    db.query(
+      "INSERT INTO movies (title, content_rating, length, score_rating, times_aired, movie_status) VALUES (?,?,?,?,?,?)",
+      [title, crating, length, srating, times_aired, movie_status],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
       }
-    }
-  );
+    );
+  } catch {}
 });
 
-app.post("/add_moviegenre", (req, res) => {
-  const id = req.body.movie_id
-  const genre = req.body.genre
-  console.log(genre)
+app.post("/add_moviegenre", async (req, res) => {
+  try {
+    const id = req.body.movie_id;
+    const genre = req.body.genre;
+    console.log(genre);
 
-  db.query(
-    "INSERT INTO moviegenre (movie_id, genre) VALUES (?,?)",
-    [id, genre],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
+    db.query(
+      "INSERT INTO moviegenre (movie_id, genre) VALUES (?,?)",
+      [id, genre],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
       }
-    }
-  );
+    );
+  } catch {}
 });
 
-app.post("add_moviegenre");
 //MOVIE REGISTRATION////////////////////////////////////////////////////////////
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
