@@ -8,6 +8,7 @@ import Branch from "./pages/Branch/Branch.js";
 import Theatre from "./pages/Theatre/Theatre.js";
 import Memtype from "./pages/MemberType/Memtype.js";
 import Seat from "./pages/Seat/Seat.js";
+import MovRegis from "./pages/MovRegis/MovRegis";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/theatre" element={<Theatre />} />
           <Route path="/memtype" element={<Memtype />} />
           <Route path="/seat" element={<Seat />} />
+          <Route path="/movies" element={<MovRegis />} />
         </Routes>
       </Router>
     </>

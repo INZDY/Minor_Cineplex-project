@@ -50,5 +50,11 @@ export const SidebarData = [
         path: '/seat',
         icon: <MdIcons.MdEventSeat />,
         cName: 'nav-text'
+    },
+    {
+        title: 'Movies',
+        path: '/movies',
+        icon: <MdIcons.MdLocalMovies />,
+        cName: 'nav-text'
     }
 ]
