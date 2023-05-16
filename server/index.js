@@ -528,7 +528,9 @@ app.post("/add_movies", async (req, res) => {
         }
       }
     );
-  } catch {}
+  } catch (error) {
+    console.error("Error:", error);
+  }
 });
 
 app.post("/add_moviegenre", async (req, res) => {
@@ -548,7 +550,9 @@ app.post("/add_moviegenre", async (req, res) => {
         }
       }
     );
-  } catch {}
+  } catch (error) {
+    console.error("Error:", error);
+  }
 });
 
 //MOVIE REGISTRATION////////////////////////////////////////////////////////////

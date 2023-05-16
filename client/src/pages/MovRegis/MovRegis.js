@@ -7,7 +7,8 @@ function MovRegis() {
   const [title, setTitle] = useState("");
   const [crating, setCrating] = useState("");
   const [length, setLength] = useState("");
-  const [srating, setSrating] = useState(null);
+  const [srating, setSrating] = useState(0);
+  const movieStatus = null;
   const [genre, setGenre] = useState([""]);
 
   const [movList, setMovList] = useState([]);
@@ -57,33 +58,37 @@ function MovRegis() {
       return { ...mov, genre: matching_genres };
     });
 
-    // console.log(movie_genres)
     setMovies(movie_genres);
     // console.log(movies)
   };
 
   const addMovies = async () => {
-    try{
+    try {
       const data = {
-            title: title,
-            content_rating: crating,
-            length: length,
-            score_rating: srating,
-            times_aired: 0,
-            movie_status: null,
-          };
-      const response1 = await Axios.post("http://localhost:3001/add_movies", data)
-      const ID = response1.data.insertId
-      console.log(ID)
+        title: title,
+        content_rating: crating,
+        length: length,
+        score_rating: srating,
+        times_aired: 0,
+        movie_status: movieStatus,
+      };
+      const response1 = await Axios.post(
+        "http://localhost:3001/add_movies",
+        data
+      );
+      const ID = response1.data.insertId;
+      console.log(ID);
 
-      genre.map(async (val) => {await Axios.post("http://localhost:3001/add_moviegenre",{
-        movie_id: ID,
-        genre: val
-      })})
-    } catch(error){
-      console.error('Error:', error)
+      genre.map(async (val) => {
+        await Axios.post("http://localhost:3001/add_moviegenre", {
+          movie_id: ID,
+          genre: val,
+        });
+      });
+    } catch (error) {
+      console.error("Error:", error);
     }
-  }
+  };
 
   const deleteMovies = () => {};
 
@@ -133,6 +138,20 @@ function MovRegis() {
             />
           </div>
 
+          <div className="mb-3">
+            <label htmlFor="score_rating" className="form-label">
+              Score Rating
+            </label>
+            <input
+              type="number"
+              className="form-control"
+              placeholder="Enter score"
+              onChange={(event) => {
+                setSrating(event.target.value);
+              }}
+            />
+          </div>
+
           {/* label */}
           <div className="mb-3">
             <label htmlFor="genre" className="form-label">
@@ -169,11 +188,7 @@ function MovRegis() {
           </button>
           <br />
           <br />
-          <button
-            type="button"
-            className="btn btn-success"
-            onClick={addMovies}
-          >
+          <button type="button" className="btn btn-success" onClick={addMovies}>
             Add Movies
           </button>
         </form>
