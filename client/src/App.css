@@ -3,20 +3,29 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  /* background-color: #eecd80; */
   /* font */
 }
 
 .home, .customer, .staff, .branch, .theatre, .memtype, .seat, .movies{
   display: flex;
-  margin: 175px;
-  margin-top: 25px;
-  padding: 100px;
+  /* margin: 175px; */
+  /* margin-top: 25px; */
+  /* padding: 100px; */
+  padding: 275px;
+  padding-top: 50px;
   /* height: 60vh; */
   /* border-style: solid; */
   align-items: left;
   flex-direction: column;
   justify-content: center;
   font-size: 1rem;
+  background-color: #eecd80;
+}
+
+.homeimg{
+  display: flex;
+  justify-content: center;
 }
 
 .mb-3{

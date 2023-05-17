@@ -1,9 +1,12 @@
 import React from "react";
+import logo from "../pictures/logo.png";
 
 function Home() {
   return (
     <div className="home">
-      <h1>Home</h1>
+      <div className="homeimg">
+        <img src={logo} />
+      </div>
     </div>
   );
 }

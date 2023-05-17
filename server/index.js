@@ -486,7 +486,7 @@ app.delete("/delete_sd/:id", (req, res) => {
 
 //MOVIE REGISTRATION////////////////////////////////////////////////////////////
 //get
-app.get("/movielist", (req, res) => {
+app.get("/movielist", async (req, res) => {
   db.query("SELECT * FROM movies", (err, result) => {
     if (err) {
       console.log(err);
@@ -496,7 +496,7 @@ app.get("/movielist", (req, res) => {
   });
 });
 
-app.get("/moviegenre", (req, res) => {
+app.get("/moviegenre", async (req, res) => {
   db.query("SELECT * FROM moviegenre", (err, result) => {
     if (err) {
       console.log(err);
@@ -508,51 +508,78 @@ app.get("/moviegenre", (req, res) => {
 
 //add
 app.post("/add_movies", async (req, res) => {
-  try {
-    const title = req.body.title;
-    const crating = req.body.content_rating;
-    const length = req.body.length;
-    const srating = req.body.score_rating;
-    const times_aired = req.body.times_aired;
-    const movie_status = req.body.movie_status;
-    console.log(res);
+  const title = req.body.title;
+  const crating = req.body.content_rating;
+  const length = req.body.length;
+  const srating = req.body.score_rating;
+  const times_aired = req.body.times_aired;
+  const movie_status = req.body.movie_status;
+  console.log(res);
 
-    db.query(
-      "INSERT INTO movies (title, content_rating, length, score_rating, times_aired, movie_status) VALUES (?,?,?,?,?,?)",
-      [title, crating, length, srating, times_aired, movie_status],
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
+  db.query(
+    "INSERT INTO movies (title, content_rating, length, score_rating, times_aired, movie_status) VALUES (?,?,?,?,?,?)",
+    [title, crating, length, srating, times_aired, movie_status],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
       }
-    );
-  } catch (error) {
-    console.error("Error:", error);
-  }
+    }
+  );
 });
 
 app.post("/add_moviegenre", async (req, res) => {
-  try {
-    const id = req.body.movie_id;
-    const genre = req.body.genre;
-    console.log(genre);
+  const id = req.body.movie_id;
+  const genre = req.body.genre;
+  console.log(genre);
 
-    db.query(
-      "INSERT INTO moviegenre (movie_id, genre) VALUES (?,?)",
-      [id, genre],
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
+  db.query(
+    "INSERT INTO moviegenre (movie_id, genre) VALUES (?,?)",
+    [id, genre],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
       }
-    );
-  } catch (error) {
-    console.error("Error:", error);
-  }
+    }
+  );
+});
+
+app.put("/edit_movies", (req, res) => {
+  const id = req.body.movie_id
+  const title = req.body.title
+  const crating = req.body.content_rating
+  const length = req.body.length
+  const srating = req.body.score_rating
+
+  db.query(
+    "UPDATE movies SET title = ?, content_rating = ?, length = ?, score_rating = ? WHERE movie_id = ?",
+    [title, crating, length, srating, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.delete("/delete_movies/:id", (req, res) => {
+  const id = req.params.id;
+  db.query(
+    "DELETE FROM movies WHERE movie_id = ?",
+    id,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
 });
 
 //MOVIE REGISTRATION////////////////////////////////////////////////////////////

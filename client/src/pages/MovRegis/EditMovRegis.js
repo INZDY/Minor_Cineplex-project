@@ -4,10 +4,11 @@ import Modal from "react-bootstrap/Modal";
 import Axios from "axios";
 
 function UpdateButton(props) {
-  const [no, setNo] = useState(props.theatre_no);
-  const [branchID, setBranchID] = useState(props.branch_id);
-  const [capacity, setCapacity] = useState(props.capacity);
-  const [type, setType] = useState(props.type);
+  const [title, setTitle] = useState(props.title);
+  const [crating, setCrating] = useState(props.crating);
+  const [length, setLength] = useState(props.length);
+  const [srating, setSrating] = useState(props.srating);
+  const [genre, setGenre] = useState(props.genre);
 
   const [show, setShow] = useState(false);
 
@@ -15,14 +16,13 @@ function UpdateButton(props) {
   const handleShow = () => setShow(true);
 
   const editTheatre = (id) => {
-    Axios.put("http://localhost:3001/edit_theatre", {
-      theatre_id: id,
-      theatre_no: no,
-      branch_id: branchID,
-      capacity: capacity,
-      theatre_type: type,
+    Axios.put("http://localhost:3001/edit_movies", {
+      movie_id: id,
+      title: title,
+      content_rating: crating,
+      length: length,
+      score_rating: srating,
     });
-    console.log("GOGOGOG");
   };
 
   return (
@@ -42,57 +42,57 @@ function UpdateButton(props) {
         </Modal.Header>
         <Modal.Body>
         <div className="mb-3">
-            <label htmlFor="theatre_no" className="form-label">
-              Theatre No.
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              value={no}
-              onChange={(event) => {
-                setNo(event.target.value);
-              }}
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="branch_id" className="form-label">
-              Branch ID
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              value={branchID}
-              onChange={(event) => {
-                setBranchID(event.target.value);
-              }}
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="capacity" className="form-label">
-              Capacity
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              value={capacity}
-              onChange={(event) => {
-                setCapacity(event.target.value);
-              }}
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="type" className="form-label">
-              Theatre Type
+            <label htmlFor="title" className="form-label">
+              Title
             </label>
             <input
               type="text"
               className="form-control"
-              value={type}
+              value={title}
               onChange={(event) => {
-                setType(event.target.value);
+                setTitle(event.target.value);
+              }}
+            />
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="content_rating" className="form-label">
+              Content Rating
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              value={crating}
+              onChange={(event) => {
+                setCrating(event.target.value);
+              }}
+            />
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="length" className="form-label">
+              Length
+            </label>
+            <input
+              type="number"
+              className="form-control"
+              value={length}
+              onChange={(event) => {
+                setLength(event.target.value);
+              }}
+            />
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="score_rating" className="form-label">
+              Score Rating
+            </label>
+            <input
+              type="number"
+              className="form-control"
+              value={srating}
+              onChange={(event) => {
+                setSrating(event.target.value);
               }}
             />
           </div>

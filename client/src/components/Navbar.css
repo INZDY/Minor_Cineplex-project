@@ -1,14 +1,25 @@
 .navbar{
-    background-color: #060b26;
+    background-color: #93261e;
     height: 80px;
     display: flex;
-    justify-content: flex-start;
+    /* justify-content: flex-start; */
     align-items: center;
+}
+
+.logocontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 2;
+}
+.logoimg{
+    height: 60px;
+    align-self: center;
 }
 
 .menu-bars{
     /* border-style: solid; */
-    margin-left: 2rem;
+    margin-left: 1.5rem;
     font-size: 2rem;
     background: none;
 }
@@ -28,6 +39,7 @@
 .nav-menu.active{
     left: -3%;
     transition: 350ms;
+    background-color: #93261e;
 }
 
 .nav-text{
@@ -58,10 +70,11 @@
 
 .nav-menu-items{
     width: 100%;
+    background-color: #93261e;
 }
 
 .navbar-toggle{
-    background-color: #060b26;
+    background-color: #93261e;
     /* border: #f5f5f5; */
     /* border-style: solid; */
     width: 100%;

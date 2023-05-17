@@ -36,16 +36,15 @@ function MovRegis() {
   };
   /////
 
-  const getMovies = () => {
-    console.log("try");
+  const getMovies = async () => {
     //Get ALL Movies
-    Axios.get("http://localhost:3001/movielist").then((response) => {
+    await Axios.get("http://localhost:3001/movielist").then((response) => {
       setMovList(response.data);
       // console.log(movList)
     });
 
     //Get GENRES
-    Axios.get("http://localhost:3001/moviegenre").then((response) => {
+    await Axios.get("http://localhost:3001/moviegenre").then((response) => {
       setMovGenre(response.data);
       // console.log(movGenre)
     });
@@ -55,7 +54,7 @@ function MovRegis() {
       const matching_genres = movGenre
         .filter((genre) => genre.movie_id === mov.movie_id)
         .map((item) => item.genre);
-      return { ...mov, genre: matching_genres };
+       return { ...mov, genre: matching_genres };
     });
 
     setMovies(movie_genres);
@@ -63,34 +62,32 @@ function MovRegis() {
   };
 
   const addMovies = async () => {
-    try {
-      const data = {
-        title: title,
-        content_rating: crating,
-        length: length,
-        score_rating: srating,
-        times_aired: 0,
-        movie_status: movieStatus,
-      };
-      const response1 = await Axios.post(
-        "http://localhost:3001/add_movies",
-        data
-      );
-      const ID = response1.data.insertId;
-      console.log(ID);
+    const data = {
+      title: title,
+      content_rating: crating,
+      length: length,
+      score_rating: srating,
+      times_aired: 0,
+      movie_status: movieStatus,
+    };
+    const response1 = await Axios.post(
+      "http://localhost:3001/add_movies",
+      data
+    );
+    const ID = response1.data.insertId;
+    console.log(ID);
 
-      genre.map(async (val) => {
-        await Axios.post("http://localhost:3001/add_moviegenre", {
-          movie_id: ID,
-          genre: val,
-        });
+    genre.map(async (val) => {
+      await Axios.post("http://localhost:3001/add_moviegenre", {
+        movie_id: ID,
+        genre: val,
       });
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    });
   };
 
-  const deleteMovies = () => {};
+  const deleteMovies = (id) => {
+    Axios.delete(`http://localhost:3001/delete_movies/${id}`);
+  };
 
   return (
     <div className="movies">
@@ -217,16 +214,18 @@ function MovRegis() {
                 <br />
 
                 {/* UPDATE BUTTON */}
-                {/* <UpdateButton
-                  id={val["movies_id"]}
-                  moviesNO={val["movies_no"]}
-                  theatreID={val["theatre_id"]}
-                  type={val["movies_type"]}
-                /> */}
+                <UpdateButton
+                  id={val["movie_id"]}
+                  title={val["title"]}
+                  crating={val["content_rating"]}
+                  length={val["length"]}
+                  srating={val["score_rating"]}
+                  genre={val["genre"]}
+                />
                 <button
                   className="btn btn-danger"
                   onClick={() => {
-                    deleteMovies();
+                    deleteMovies(val["movie_id"]);
                   }}
                 >
                   Delete
