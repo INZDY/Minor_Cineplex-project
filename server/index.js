@@ -37,7 +37,10 @@ app.post("/add_customer", (req, res) => {
   console.log(res);
 
   db.query(
-    "INSERT INTO customer (customer_fname, customer_lname, customer_email, customer_tel, customer_citizen_id, customer_address, customer_gender, customer_DOB, type_name) VALUES (?,?,?,?,?,?,?,?,?)",
+    "INSERT INTO customer \
+    (customer_fname, customer_lname, customer_email, customer_tel, \
+      customer_citizen_id, customer_address, customer_gender, customer_DOB, \
+      type_name) VALUES (?,?,?,?,?,?,?,?,?)",
     [fname, lname, email, tel, citizenID, address, gender, DOB, type],
     (err, result) => {
       if (err) {
