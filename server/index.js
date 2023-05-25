@@ -585,6 +585,21 @@ app.delete("/delete_movies/:id", (req, res) => {
   );
 });
 
+app.delete("/delete_moviegenre/:id", (req, res) => {
+  const id = req.params.id;
+  db.query(
+    "DELETE FROM moviegenre WHERE movie_id = ?",
+    id,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 //MOVIE REGISTRATION////////////////////////////////////////////////////////////
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");

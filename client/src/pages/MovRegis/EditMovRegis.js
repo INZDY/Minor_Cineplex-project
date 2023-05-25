@@ -15,13 +15,43 @@ function UpdateButton(props) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const editTheatre = (id) => {
-    Axios.put("http://localhost:3001/edit_movies", {
+  // for multiple inputs
+  const handleFormChange = (index, event) => {
+    let data = [...genre];
+    data[index] = event.target.value;
+    setGenre(data);
+    console.log(genre);
+  };
+
+  const addFields = () => {
+    let newField = "";
+    setGenre([...genre, newField]);
+    // console.log(genre);
+  };
+
+  const removeFields = (index) => {
+    let data = [...genre];
+    data.splice(index, 1);
+    setGenre(data);
+  };
+  /////
+
+  const editTheatre = async (id) => {
+    await Axios.put("http://localhost:3001/edit_movies", {
       movie_id: id,
       title: title,
       content_rating: crating,
       length: length,
       score_rating: srating,
+    });
+
+    await Axios.delete(`http://localhost:3001/delete_moviegenre/${id}`);
+
+    genre.map(async (val) => {
+      await Axios.post("http://localhost:3001/add_moviegenre", {
+        movie_id: id,
+        genre: val,
+      });
     });
   };
 
@@ -41,7 +71,7 @@ function UpdateButton(props) {
           <Modal.Title>Edit Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <div className="mb-3">
+          <div className="mb-3">
             <label htmlFor="title" className="form-label">
               Title
             </label>
@@ -96,6 +126,35 @@ function UpdateButton(props) {
               }}
             />
           </div>
+
+          {/* genre */}
+          {genre.map((input, index) => {
+            return (
+              <div className="mb-3" key={index}>
+                <input
+                  type="text"
+                  className="form-control multi-row"
+                  value={input}
+                  onChange={(event) => handleFormChange(index, event)}
+                />
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  onClick={() => removeFields(index)}
+                >
+                  Remove
+                </button>
+              </div>
+            );
+          })}
+          <button
+            className="btn btn-secondary"
+            type="button"
+            onClick={addFields}
+          >
+            Add More Genre
+          </button>
+
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
