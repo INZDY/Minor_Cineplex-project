@@ -19,8 +19,8 @@ function Seat() {
     let data = [...inputFields];
     data[index][event.target.name] = event.target.value;
     setInputFields(data);
-    console.log(inputFields);
-    console.log(theatreID, date)
+    // console.log(inputFields);
+    // console.log(theatreID, date);
   };
 
   const addFields = () => {
@@ -37,9 +37,9 @@ function Seat() {
   /////
 
   //  get required table
-  const getSeats = () => {
+  const getSeats = async () => {
     //get ALL seatdetails
-    Axios.get("http://localhost:3001/seatdetails").then((response) => {
+    await Axios.get("http://localhost:3001/seatdetails").then((response) => {
       setSeatDetailList(response.data);
     });
     // console.log(seatDetailList);
@@ -48,7 +48,7 @@ function Seat() {
     // const seatIDs = seatList.map(item => item.seat_id)
 
     //get ALL, MOST RECENT seathistory
-    Axios.get("http://localhost:3001/seathistory").then((response) => {
+    await Axios.get("http://localhost:3001/seathistory").then((response) => {
       setSeatHistoryList(response.data);
     });
     // console.log(seatHistoryList);
@@ -62,8 +62,7 @@ function Seat() {
         seat_type: item.seat_type,
         alter_id: seatHistoryList[index].alter_id,
         date: seatHistoryList[index].date,
-        price_before: seatHistoryList[index].price_before,
-        price_after: seatHistoryList[index].price_after,
+        price: seatHistoryList[index].price,
         staff_id: seatHistoryList[index].staff_id,
       };
     });
@@ -72,44 +71,33 @@ function Seat() {
   };
   /////
 
-  const addSeat = () => {
-    inputFields.map((input, index) => {
-      Axios.post("http://localhost:3001/add_seatdetails", {
-        theatre_id: theatreID,
-        seat_no: input["no"],
-        seat_type: input["type"],
-      });
+  const addSeat = async () => {
+    inputFields.map(async (input, index) => {
+      const response = await Axios.post(
+        "http://localhost:3001/add_seatdetails",
+        {
+          theatre_id: theatreID,
+          seat_no: input["no"],
+          seat_type: input["type"],
+        }
+      );
 
-      getSeats();
-      let currentSeatID = Math.max(seatList.map((item) => item.seat_id));
-      let currentPrice = Math.max(seatList.map((item) => item.seat_id));
+      const ID = response.data.insertId;
+      // console.log(ID);
 
-
-      Axios.post("http://localhost:3001/add_seathistory", {
-        seat_id: currentSeatID,
+      await Axios.post("http://localhost:3001/add_seathistory", {
+        seat_id: ID,
         date: date,
-        price_before: seatList["price_after"],
-        price_after: input["price"],
+        price: input["price"],
         staff_id: input["staff"],
       });
     });
 
-    Axios.post("http://localhost:3001/add_seathistory", {});
-    // .then(() => {
-    //   setSeatList([
-    //     ...seatList,
-    //     {
-    //       theatre_id: theatreID,
-    //       seat_no: inputFields["no"],
-    //       seat_type: inputFields["type"],
-    //     },
-    //   ]);
-    // });
-    console.log(seatDetailList);
+    // console.log(seatDetailList);
   };
 
-  const deleteSeat = (name) => {
-    Axios.delete(`http://localhost:3001/delete_seat/${name}`);
+  const deleteSeat = (id) => {
+    Axios.delete(`http://localhost:3001/delete_seatdetails/${id}`);
   };
 
   return (
@@ -170,14 +158,7 @@ function Seat() {
                   type="text"
                   className="form-control multi-row"
                   placeholder="Enter seat no"
-                  onChange={
-                    (event) => handleFormChange(index, event)
-                    // setInputFields({
-                    //   ...inputFields,
-                    //   [event.target.name]: event.target.value,
-                    // });
-                    // setName(event.target.value);
-                  }
+                  onChange={(event) => handleFormChange(index, event)}
                 />
                 <input
                   name="type"
@@ -219,7 +200,7 @@ function Seat() {
           </button>
           <br />
           <br />
-          <button className="btn btn-success" onClick={addSeat}>
+          <button className="btn btn-success" type="button" onClick={addSeat}>
             Add Seat
           </button>
         </form>
@@ -231,22 +212,24 @@ function Seat() {
         </button>
         <br />
         <br />
-        {seatDetailList.map((val, key) => {
+        {seatList.map((val, key) => {
           return (
             <div className="seats card">
               <div className="card-body text-left">
-                <p className="card-text">Seat ID: {val["seat_id"]}</p>
-                <p className="card-text">Seat No: {val["seat_no"]}</p>
                 <p className="card-text">Theatre ID: {val["theatre_id"]}</p>
+                {/* <p className="card-text">Seat ID: {val["seat_id"]}</p> */}
+                <p className="card-text">Seat No: {val["seat_no"]}</p>
                 <p className="card-text">Seat Type: {val["seat_type"]}</p>
+                <p className="card-text">Price: {val["price"]}</p>
                 <br />
 
                 {/* UPDATE BUTTON */}
                 <UpdateButton
                   id={val["seat_id"]}
-                  seatNO={val["seat_no"]}
                   theatreID={val["theatre_id"]}
+                  seatNO={val["seat_no"]}
                   type={val["seat_type"]}
+                  price={val["price"]}
                 />
                 <button
                   className="btn btn-danger"

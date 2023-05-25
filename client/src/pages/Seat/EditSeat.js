@@ -7,20 +7,31 @@ function UpdateButton(props) {
   const [seatNO, setSeatNO] = useState(props.seatNO);
   const [theatreID, setTheatreID] = useState(props.theatreID);
   const [type, setType] = useState(props.type);
+  const [price, setPrice] = useState(props.price);
+  const [date, setDate] = useState("");
+  const [staff, setStaff] = useState("");
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const editSD = (id) => {
-    Axios.put(`http://localhost:3001/edit_sd`, {
+  const editSD = async (id) => {
+    await Axios.put(`http://localhost:3001/edit_seatdetails`, {
       seat_id: id,
       seat_no: seatNO,
       theatre_id: theatreID,
       seat_type: type,
     });
-    console.log("GOGOGOG");
+
+    if (price !== props.price) {
+      await Axios.post("http://localhost:3001/add_seathistory", {
+        seat_id: id,
+        date: date,
+        price: price,
+        staff_id: staff,
+      });
+    }
   };
 
   return (
@@ -77,6 +88,47 @@ function UpdateButton(props) {
               value={type}
               onChange={(event) => {
                 setType(event.target.value);
+              }}
+            />
+          </div>
+
+          {/* label */}
+          <div className="mb-3">
+            <label htmlFor="date" className="form-label">
+              Date
+            </label>
+            <label htmlFor="price" className="form-label">
+              Price
+            </label>
+            <label htmlFor="staff_id" className="form-label">
+              Staff ID
+            </label>
+          </div>
+
+          {/* price update */}
+          <div className="mb-3">
+            <input
+              type="date"
+              className="form-control multi-row"
+              value={date}
+              onChange={(event) => {
+                setDate(event.target.value);
+              }}
+            />
+            <input
+              type="number"
+              className="form-control multi-row"
+              value={price}
+              onChange={(event) => {
+                setPrice(event.target.value);
+              }}
+            />
+            <input
+              type="text"
+              className="form-control multi-row"
+              value={staff}
+              onChange={(event) => {
+                setStaff(event.target.value);
               }}
             />
           </div>

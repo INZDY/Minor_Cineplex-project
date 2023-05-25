@@ -394,7 +394,10 @@ app.get("/seatdetails", (req, res) => {
 
 app.get("/seathistory", (req, res) => {
   db.query(
-    "SELECT t1.* FROM seatpricehistory t1 JOIN (SELECT seat_id, MAX(date) AS max_date FROM seatpricehistory GROUP BY seat_id) t2 ON t1.seat_id = t2.seat_id AND t1.date = t2.max_date ORDER BY seat_id",
+    "SELECT t1.* FROM seatpricehistory t1 \
+    JOIN (SELECT seat_id, MAX(date) AS max_date \
+    FROM seatpricehistory GROUP BY seat_id) t2 ON t1.seat_id = t2.seat_id \
+    AND t1.date = t2.max_date ORDER BY seat_id",
     (err, result) => {
       if (err) {
         console.log(err);
@@ -413,13 +416,13 @@ app.post("/add_seatdetails", (req, res) => {
 
   //insert as a new seat if it is not already present
   db.query(
-    "INSERT INTO seatdetails (seat_no, theatre_id, seat_type) SELECT ?,?,? WHERE NOT EXISTS (SELECT 1 FROM seatdetails WHERE seat_no = ? AND theatre_id = ?)",
-    [seatNO, theatreID, type, seatNO, theatreID],
+    "INSERT INTO seatdetails (seat_no, theatre_id, seat_type) VALUES (?,?,?)",
+    [seatNO, theatreID, type],
     (err, result) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("Values Inserted");
+        res.send(result);
       }
     }
   );
@@ -428,21 +431,17 @@ app.post("/add_seatdetails", (req, res) => {
 app.post("/add_seathistory", (req, res) => {
   const seatID = req.body.seat_id;
   const date = req.body.date;
-  const price_before = req.body.price_before;
-  const price_after = req.body.price_after;
+  const price = req.body.price;
   const staffID = req.body.staff_id;
 
   //insert only if before != after
   db.query(
-    "INSERT INTO seatpricehistory (seat_id, date, price_before, price_after, staff_id) SELECT ?,?,?,?,? WHERE ? <> ?",
+    "INSERT INTO seatpricehistory (seat_id, date, price, staff_id) VALUES (?,?,?,?)",
     [
       seatID,
       date,
-      price_before,
-      price_after,
-      staffID,
-      price_before,
-      price_after,
+      price,
+      staffID
     ],
     (err, result) => {
       if (err) {
@@ -455,16 +454,16 @@ app.post("/add_seathistory", (req, res) => {
 });
 
 //edit
-app.put("/edit_sd", (req, res) => {
-  const id = req.body.sd_id;
-  const sd_no = req.body.sd_no;
-  const branch_id = req.body.branch_id;
-  const capacity = req.body.capacity;
-  const type = req.body.sd_type;
+app.put("/edit_seatdetails", (req, res) => {
+  const id = req.body.seat_id;
+  const seat_no = req.body.seat_no;
+  const theatre_id = req.body.theatre_id
+  const type = req.body.seat_type
+  
 
   db.query(
-    "UPDATE sd SET sd_no = ?, branch_id = ?, capacity = ?, sd_type = ? WHERE sd_id = ?",
-    [sd_no, branch_id, capacity, type, id],
+    "UPDATE seatdetails SET seat_no = ?, theatre_id = ?, seat_type = ? WHERE seat_id = ?",
+    [seat_no, theatre_id, type, id],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -475,9 +474,9 @@ app.put("/edit_sd", (req, res) => {
   );
 });
 
-app.delete("/delete_sd/:id", (req, res) => {
+app.delete("/delete_seatdetails/:id", (req, res) => {
   const id = req.params.id;
-  db.query("DELETE FROM sd WHERE sd_id = ?", id, (err, result) => {
+  db.query("DELETE FROM seatdetails WHERE seat_id = ?", id, (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -517,7 +516,7 @@ app.post("/add_movies", async (req, res) => {
   const srating = req.body.score_rating;
   const times_aired = req.body.times_aired;
   const movie_status = req.body.movie_status;
-  console.log(res);
+  // console.log(res);
 
   db.query(
     "INSERT INTO movies (title, content_rating, length, score_rating, times_aired, movie_status) VALUES (?,?,?,?,?,?)",
