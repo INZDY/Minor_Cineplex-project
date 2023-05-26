@@ -7,7 +7,15 @@
   /* font */
 }
 
-.home, .customer, .staff, .branch, .theatre, .memtype, .seat, .movies{
+.home, 
+.customer, 
+.staff, 
+.branch, 
+.theatre, 
+.memtype, 
+.seat, 
+.movies, 
+.movielicense{
   display: flex;
   /* margin: 175px; */
   /* margin-top: 25px; */
