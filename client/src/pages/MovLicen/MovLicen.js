@@ -85,6 +85,7 @@ function MovLicen() {
   return (
     <div className="movielicense">
       <h1>Movie Licensing</h1>
+      <br />
       <div className="moviesInformation">
         <form action="">
           {/* moviedetails*/}
@@ -140,8 +141,6 @@ function MovLicen() {
             />
           </div>
 
-          <br />
-          <br />
           <button
             type="button"
             className="btn btn-success"

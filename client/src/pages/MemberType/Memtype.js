@@ -39,6 +39,7 @@ function Memtype() {
   return (
     <div className="memtype">
       <h1>Memtype Information</h1>
+      <br />
       <div className="memtypeInformation">
         <form action="">
 

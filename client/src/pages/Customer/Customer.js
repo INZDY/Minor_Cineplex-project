@@ -60,6 +60,7 @@ function Customer() {
   return (
     <div className="customer">
       <h1>Customer Information</h1>
+      <br />
       <div className="customerInformation">
         <form action="">
           <div className="mb-3">

@@ -92,6 +92,7 @@ function MovRegis() {
   return (
     <div className="movies">
       <h1>Movie Registration</h1>
+      <br />
       <div className="moviesInformation">
         <form action="">
           {/* moviedetails*/}

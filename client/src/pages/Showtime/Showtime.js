@@ -151,9 +151,7 @@ function Showtime() {
               }}
             />
           </div>
-
-          <br />
-          <br />
+          
           <button
             type="button"
             className="btn btn-success"

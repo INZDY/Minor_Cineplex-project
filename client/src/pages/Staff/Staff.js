@@ -66,6 +66,7 @@ function Staff() {
   return (
     <div className="staff">
       <h1>Staff Information</h1>
+      <br />
       <div className="staffInformation">
         <form action="">
           <div className="mb-3">

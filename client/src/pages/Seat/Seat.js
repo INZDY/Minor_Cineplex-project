@@ -103,6 +103,7 @@ function Seat() {
   return (
     <div className="seat">
       <h1>Seat Information</h1>
+      <br />
       <div className="seatInformation">
         <form action="">
           {/* theatre id , date*/}

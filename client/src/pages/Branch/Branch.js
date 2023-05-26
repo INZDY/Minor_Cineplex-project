@@ -45,6 +45,7 @@ function Branch() {
   return (
     <div className="branch">
       <h1>Branch Information</h1>
+      <br />
       <div className="branchInformation">
         <form action="">
           <div className="mb-3">

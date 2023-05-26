@@ -45,6 +45,7 @@ function Theatre() {
   return (
     <div className="theatre">
       <h1>Theatre Information</h1>
+      <br />
       <div className="theatreInformation">
         <form action="">
           <div className="mb-3">
