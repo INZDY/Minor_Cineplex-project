@@ -36,13 +36,14 @@ function UpdateButton(props) {
   };
   /////
 
-  const editTheatre = async (id) => {
+  const editMovies = async (id) => {
     await Axios.put("http://localhost:3001/edit_movies", {
       movie_id: id,
       title: title,
       content_rating: crating,
       length: length,
       score_rating: srating,
+      movie_status: null
     });
 
     await Axios.delete(`http://localhost:3001/delete_moviegenre/${id}`);
@@ -163,7 +164,7 @@ function UpdateButton(props) {
           <Button
             variant="primary"
             onClick={() => {
-              editTheatre(props.id);
+              editMovies(props.id);
             }}
           >
             Save Changes

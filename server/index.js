@@ -600,6 +600,94 @@ app.delete("/delete_moviegenre/:id", (req, res) => {
 });
 
 //MOVIE REGISTRATION////////////////////////////////////////////////////////////
+
+
+//MOVIE LICENSING///////////////////////////////////////////////////////////////
+app.get("/movielicense", async (req, res) => {
+  db.query("SELECT * FROM movielicense", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/add_movielicense", async (req, res) => {
+  const movID = req.body.movie_id
+  const licStart = req.body.license_start
+  const licEnd = req.body.license_end
+  const cost = req.body.movie_cost
+
+  db.query(
+    "INSERT INTO movielicense (license_start, license_end, movie_id, movie_cost) VALUES (?,?,?,?)",
+    [licStart, licEnd, movID, cost],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//adding license changes movie status
+app.put("/edit_moviestatus", (req, res) => {
+  const id = req.body.movie_id
+  const status = req.body.movie_status
+
+  db.query(
+    "UPDATE movies SET movie_status = ? WHERE movie_id = ?",
+    [status, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//edit movielicense
+app.put("/edit_movielicense", (req, res) => {
+  const id = req.body.movie_id
+  const movID = req.body.movie_id
+  const licS = req.body.license_start
+  const licE = req.body.license_end
+  const cost = req.body.movie_cost
+
+  db.query(
+    "UPDATE movielicense SET movie_id = ?, license_start = ?, license_end = ?, movie_cost = ? WHERE license_id = ?",
+    [movID, licS, licE, cost, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.delete("/delete_movielicense/:id", (req, res) => {
+  const id = req.params.id;
+  db.query(
+    "DELETE FROM movielicense WHERE license_id = ?",
+    id,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//MOVIE LICENSING///////////////////////////////////////////////////////////////
+
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
 });

@@ -2,89 +2,65 @@ import React from "react";
 import { useState } from "react";
 import Axios from "axios";
 import UpdateButton from "./EditMovLicen";
+import axios from "axios";
 
 function MovLicen() {
   const [licStart, setLicStart] = useState("");
   const [licEnd, setLicEnd] = useState("");
-  const [movID, setMovID] = useState("")
+  const [movID, setMovID] = useState("");
   const [cost, setCost] = useState("");
 
-//   const [movList, setMovList] = useState([]);
-//   const [movGenre, setMovGenre] = useState([]);
-//   const [movies, setMovies] = useState([]);
+  const [licenList, setLicenList] = useState([]);
 
-  // for multiple inputs
-//   const handleFormChange = (index, event) => {
-//     let data = [...genre];
-//     data[index] = event.target.value;
-//     setGenre(data);
-//     console.log(genre);
-//   };
+  const convertDate = (datetime) => {
+    const date = new Date(datetime).toLocaleDateString("en-GB", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+    // const date = new Date(datetime).toISOString();
 
-//   const addFields = () => {
-//     let newField = "";
-//     setGenre([...genre, newField]);
-//     // console.log(genre);
-//   };
+    return date;
+  };
 
-//   const removeFields = (index) => {
-//     let data = [...genre];
-//     data.splice(index, 1);
-//     setGenre(data);
-//   };
-  /////
-
-  const getMovies = async () => {
+  const getLicense = async () => {
     //Get ALL Movies
-    await Axios.get("http://localhost:3001/movielist").then((response) => {
-      setMovList(response.data);
-      // console.log(movList)
+    await Axios.get("http://localhost:3001/movielicense").then((response) => {
+      setLicenList(response.data);
     });
-
-    //Get GENRES
-    await Axios.get("http://localhost:3001/moviegenre").then((response) => {
-      setMovGenre(response.data);
-      // console.log(movGenre)
-    });
-
-    //MOVIES + GENRES
-    let movie_genres = movList.map((mov) => {
-      const matching_genres = movGenre
-        .filter((genre) => genre.movie_id === mov.movie_id)
-        .map((item) => item.genre);
-       return { ...mov, genre: matching_genres };
-    });
-
-    setMovies(movie_genres);
-    // console.log(movies)
+    // console.log(licenList);
   };
 
-  const addMovies = async () => {
-    const data = {
-      title: title,
-      content_rating: crating,
-      length: length,
-      score_rating: srating,
-      times_aired: 0,
-      movie_status: movieStatus,
-    };
-    const response1 = await Axios.post(
-      "http://localhost:3001/add_movies",
-      data
-    );
-    const ID = response1.data.insertId;
-    console.log(ID);
+  const addLicense = async () => {
+    await Axios.post("http://localhost:3001/add_movielicense", {
+      movie_id: movID,
+      license_start: licStart,
+      license_end: licEnd,
+      movie_cost: cost,
+    });
 
-    genre.map(async (val) => {
-      await Axios.post("http://localhost:3001/add_moviegenre", {
-        movie_id: ID,
-        genre: val,
-      });
+    const currDate = new Date();
+    const start = new Date(licStart);
+    const end = new Date(licEnd);
+    let status = null;
+
+    // console.log(currDate, start, end);
+    if (end < currDate) {
+      status = "expired";
+    } else if (start > currDate) {
+      status = "comingsoon";
+    } else if (currDate >= start && currDate <= end) {
+      status = "airing";
+    }
+
+    await Axios.put("http://localhost:3001/edit_moviestatus", {
+      movie_id: movID,
+      movie_status: status,
     });
   };
 
-  const deleteMovies = (id) => {
-    Axios.delete(`http://localhost:3001/delete_movies/${id}`);
+  const deleteLicense = (id) => {
+    Axios.delete(`http://localhost:3001/delete_movielicense/${id}`);
   };
 
   return (
@@ -147,47 +123,48 @@ function MovLicen() {
 
           <br />
           <br />
-          <button type="button" className="btn btn-success" onClick={addMovies}>
-            Add Movies
+          <button
+            type="button"
+            className="btn btn-success"
+            onClick={addLicense}
+          >
+            Add Movie License
           </button>
         </form>
       </div>
       <hr />
       <div className="moviesButton">
-        <button className="btn btn-primary" onClick={getMovies}>
-          Refresh Movie List
+        <button className="btn btn-primary" onClick={getLicense}>
+          Refresh License List
         </button>
         <br />
         <br />
-        {movies.map((val, key) => {
+        {licenList.map((val, key) => {
           return (
-            <div className="moviess card">
+            <div className="licenses card">
               <div className="card-body text-left">
                 <p className="card-text">Movie ID: {val["movie_id"]}</p>
-                <p className="card-text">Title: {val["title"]}</p>
                 <p className="card-text">
-                  Content rating: {val["content_rating"]}
+                  License Start: {convertDate(val["license_start"])}
                 </p>
-                <p className="card-text">Length: {val["length"]}</p>
-                <p className="card-text">Score Rating: {val["score_rating"]}</p>
-                <p className="card-text">Movie Status: {val["movie_status"]}</p>
-                <p className="card-text">Times Aired: {val["times_aired"]}</p>
-                <p className="card-text">Genre: {val["genre"].join(", ")}</p>
+                <p className="card-text">
+                  License End: {convertDate(val["license_end"])}
+                </p>
+                <p className="card-text">Cost: {val["movie_cost"]}</p>
                 <br />
 
                 {/* UPDATE BUTTON */}
                 <UpdateButton
-                  id={val["movie_id"]}
-                  title={val["title"]}
-                  crating={val["content_rating"]}
-                  length={val["length"]}
-                  srating={val["score_rating"]}
-                  genre={val["genre"]}
+                  id={val["license_id"]}
+                  movID={val["movie_id"]}
+                  licS={val["license_start"]}
+                  licE={val["license_end"]}
+                  cost={val["movie_cost"]}
                 />
                 <button
                   className="btn btn-danger"
                   onClick={() => {
-                    deleteMovies(val["movie_id"]);
+                    deleteLicense(val["license_id"]);
                   }}
                 >
                   Delete
