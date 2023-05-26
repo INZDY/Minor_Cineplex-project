@@ -437,12 +437,7 @@ app.post("/add_seathistory", (req, res) => {
   //insert only if before != after
   db.query(
     "INSERT INTO seatpricehistory (seat_id, date, price, staff_id) VALUES (?,?,?,?)",
-    [
-      seatID,
-      date,
-      price,
-      staffID
-    ],
+    [seatID, date, price, staffID],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -457,9 +452,8 @@ app.post("/add_seathistory", (req, res) => {
 app.put("/edit_seatdetails", (req, res) => {
   const id = req.body.seat_id;
   const seat_no = req.body.seat_no;
-  const theatre_id = req.body.theatre_id
-  const type = req.body.seat_type
-  
+  const theatre_id = req.body.theatre_id;
+  const type = req.body.seat_type;
 
   db.query(
     "UPDATE seatdetails SET seat_no = ?, theatre_id = ?, seat_type = ? WHERE seat_id = ?",
@@ -550,11 +544,11 @@ app.post("/add_moviegenre", async (req, res) => {
 });
 
 app.put("/edit_movies", (req, res) => {
-  const id = req.body.movie_id
-  const title = req.body.title
-  const crating = req.body.content_rating
-  const length = req.body.length
-  const srating = req.body.score_rating
+  const id = req.body.movie_id;
+  const title = req.body.title;
+  const crating = req.body.content_rating;
+  const length = req.body.length;
+  const srating = req.body.score_rating;
 
   db.query(
     "UPDATE movies SET title = ?, content_rating = ?, length = ?, score_rating = ? WHERE movie_id = ?",
@@ -571,36 +565,27 @@ app.put("/edit_movies", (req, res) => {
 
 app.delete("/delete_movies/:id", (req, res) => {
   const id = req.params.id;
-  db.query(
-    "DELETE FROM movies WHERE movie_id = ?",
-    id,
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
+  db.query("DELETE FROM movies WHERE movie_id = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
     }
-  );
+  });
 });
 
 app.delete("/delete_moviegenre/:id", (req, res) => {
   const id = req.params.id;
-  db.query(
-    "DELETE FROM moviegenre WHERE movie_id = ?",
-    id,
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
+  db.query("DELETE FROM moviegenre WHERE movie_id = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
     }
-  );
+  });
 });
 
 //MOVIE REGISTRATION////////////////////////////////////////////////////////////
-
 
 //MOVIE LICENSING///////////////////////////////////////////////////////////////
 app.get("/movielicense", async (req, res) => {
@@ -614,10 +599,10 @@ app.get("/movielicense", async (req, res) => {
 });
 
 app.post("/add_movielicense", async (req, res) => {
-  const movID = req.body.movie_id
-  const licStart = req.body.license_start
-  const licEnd = req.body.license_end
-  const cost = req.body.movie_cost
+  const movID = req.body.movie_id;
+  const licStart = req.body.license_start;
+  const licEnd = req.body.license_end;
+  const cost = req.body.movie_cost;
 
   db.query(
     "INSERT INTO movielicense (license_start, license_end, movie_id, movie_cost) VALUES (?,?,?,?)",
@@ -634,8 +619,8 @@ app.post("/add_movielicense", async (req, res) => {
 
 //adding license changes movie status
 app.put("/edit_moviestatus", (req, res) => {
-  const id = req.body.movie_id
-  const status = req.body.movie_status
+  const id = req.body.movie_id;
+  const status = req.body.movie_status;
 
   db.query(
     "UPDATE movies SET movie_status = ? WHERE movie_id = ?",
@@ -652,11 +637,11 @@ app.put("/edit_moviestatus", (req, res) => {
 
 //edit movielicense
 app.put("/edit_movielicense", (req, res) => {
-  const id = req.body.movie_id
-  const movID = req.body.movie_id
-  const licS = req.body.license_start
-  const licE = req.body.license_end
-  const cost = req.body.movie_cost
+  const id = req.body.movie_id;
+  const movID = req.body.movie_id;
+  const licS = req.body.license_start;
+  const licE = req.body.license_end;
+  const cost = req.body.movie_cost;
 
   db.query(
     "UPDATE movielicense SET movie_id = ?, license_start = ?, license_end = ?, movie_cost = ? WHERE license_id = ?",
@@ -687,6 +672,58 @@ app.delete("/delete_movielicense/:id", (req, res) => {
 });
 
 //MOVIE LICENSING///////////////////////////////////////////////////////////////
+
+//SHOWTIME//////////////////////////////////////////////////////////////////////
+app.get("/showtime", async (req, res) => {
+  db.query(
+    "SELECT s.*, m.title AS title FROM showtime s, movies m WHERE s.movie_id = m.movie_id",
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/add_showtime", async (req, res) => {
+  const movID = req.body.movie_id;
+  const theaID = req.body.theatre_id
+  const showtime = req.body.show_time;
+  const date = req.body.date;
+  const lang = req.body.air_language
+  const sub = req.body.subtitle
+  const free = req.body.available_seats
+
+  db.query(
+    "INSERT INTO showtime (movie_id, theatre_id, show_time, date, air_language, subtitle, available_seats) VALUES (?,?,?,?,?,?,?)",
+    [movID, theaID, showtime, date, lang, sub, free],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.delete("/delete_showtime/:id", (req, res) => {
+  const id = req.params.id;
+  db.query(
+    "DELETE FROM showtime WHERE showtime_id = ?",
+    id,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+//SHOWTIME//////////////////////////////////////////////////////////////////////
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");

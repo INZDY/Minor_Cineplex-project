@@ -64,4 +64,10 @@ export const SidebarData = [
     icon: <RiIcons.RiFilePaperFill />,
     cName: "nav-text",
   },
+  {
+    title: "Showtime",
+    path: "/showtime    ",
+    icon: <GiIcons.GiFilmProjector />,
+    cName: "nav-text",
+  },
 ];

@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import Axios from "axios";
 import UpdateButton from "./EditMovLicen";
-import axios from "axios";
 
 function MovLicen() {
   const [licStart, setLicStart] = useState("");
@@ -29,7 +28,7 @@ function MovLicen() {
     });
 
     const currDate = new Date();
-    
+
     licenList.map(async (val, index) => {
       const start = new Date(val["license_start"]);
       const end = new Date(val["license_end"]);

@@ -15,7 +15,9 @@
 .memtype, 
 .seat, 
 .movies, 
-.movielicense{
+.movielicense,
+.showtime,
+.reservation{
   display: flex;
   /* margin: 175px; */
   /* margin-top: 25px; */

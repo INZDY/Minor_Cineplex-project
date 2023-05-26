@@ -10,6 +10,7 @@ import Memtype from "./pages/MemberType/Memtype.js";
 import Seat from "./pages/Seat/Seat.js";
 import MovRegis from "./pages/MovRegis/MovRegis";
 import MovLicen from "./pages/MovLicen/MovLicen";
+import Showtime from "./pages/Showtime/Showtime";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/seat" element={<Seat />} />
           <Route path="/movies" element={<MovRegis />} />
           <Route path="/movielicense" element={<MovLicen />} />
+          <Route path="/showtime" element={<Showtime />} />
         </Routes>
       </Router>
     </>
