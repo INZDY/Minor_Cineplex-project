@@ -18,7 +18,6 @@ function MovLicen() {
       month: "2-digit",
       day: "2-digit",
     });
-    // const date = new Date(datetime).toISOString();
 
     return date;
   };
@@ -28,7 +27,28 @@ function MovLicen() {
     await Axios.get("http://localhost:3001/movielicense").then((response) => {
       setLicenList(response.data);
     });
-    // console.log(licenList);
+
+    const currDate = new Date();
+    
+    licenList.map(async (val, index) => {
+      const start = new Date(val["license_start"]);
+      const end = new Date(val["license_end"]);
+      let status = null;
+
+      // console.log(currDate, start, end);
+      if (end < currDate) {
+        status = "expired";
+      } else if (start > currDate) {
+        status = "comingsoon";
+      } else if (currDate >= start && currDate <= end) {
+        status = "airing";
+      }
+
+      await Axios.put("http://localhost:3001/edit_moviestatus", {
+        movie_id: val["movie_id"],
+        movie_status: status,
+      });
+    });
   };
 
   const addLicense = async () => {
