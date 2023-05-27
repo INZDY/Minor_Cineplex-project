@@ -734,6 +734,23 @@ app.put("/edit_showtime", (req, res) => {
   );
 });
 
+app.put("/edit_timesaired", (req, res) => {
+  const id = req.body.movie_id
+  const times = req.body.times_aired
+
+  db.query(
+  "UPDATE movies SET times_aired = ? WHERE movie_id = ?",
+    [times, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 app.delete("/delete_showtime/:id", (req, res) => {
   const id = req.params.id;
   db.query(
@@ -749,6 +766,12 @@ app.delete("/delete_showtime/:id", (req, res) => {
   );
 });
 //SHOWTIME//////////////////////////////////////////////////////////////////////
+
+
+//UNIVERSAL/////////////////////////////////////////////////////////////////////
+
+//UNIVERSAL/////////////////////////////////////////////////////////////////////
+
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");

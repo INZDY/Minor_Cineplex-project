@@ -18,8 +18,28 @@ function Showtime() {
   const getShowtime = async () => {
     //Get ALL Showtimes
     await Axios.get("http://localhost:3001/showtime").then((response) => {
-    //   console.log(response.data);
+      //   console.log(response.data);
       setShowtimeList(response.data);
+    });
+
+    const movieAirCount = [];
+    showtimeList.forEach((item) => {
+      const existingIntem = movieAirCount.find(
+        (existItem) => existItem.movie_id === item.movie_id
+      );
+
+      if (existingIntem) {
+        existingIntem.count++;
+      } else {
+        movieAirCount.push({ movie_id: item.movie_id, count: 1 });
+      }
+    });
+
+    movieAirCount.map(async (val, index) => {
+        await Axios.put("http://localhost:3001/edit_timesaired",{
+            movie_id: val.movie_id,
+            times_aired: val.count
+        })
     });
   };
 
@@ -166,7 +186,9 @@ function Showtime() {
                 <p className="card-text">Movie ID: {val["movie_id"]}</p>
                 <p className="card-text">Title: {val["title"]}</p>
                 <p className="card-text">Date: {convertDate(val["date"])}</p>
-                <p className="card-text">Showtime: {convertTime(val["show_time"])}</p>
+                <p className="card-text">
+                  Showtime: {convertTime(val["show_time"])}
+                </p>
                 <p className="card-text">Theatre ID: {val["theatre_id"]}</p>
                 <p className="card-text">Air Language: {val["air_language"]}</p>
                 <p className="card-text">Subtitle: {val["subtitle"]}</p>
