@@ -11,6 +11,7 @@ import Seat from "./pages/Seat/Seat.js";
 import MovRegis from "./pages/MovRegis/MovRegis";
 import MovLicen from "./pages/MovLicen/MovLicen";
 import Showtime from "./pages/Showtime/Showtime";
+import Reservation from "./pages/Reservation/Reservation";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/movies" element={<MovRegis />} />
           <Route path="/movielicense" element={<MovLicen />} />
           <Route path="/showtime" element={<Showtime />} />
+          <Route path="/reservation" element={<Reservation />} />
         </Routes>
       </Router>
     </>

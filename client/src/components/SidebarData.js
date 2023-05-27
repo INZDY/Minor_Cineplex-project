@@ -7,6 +7,7 @@ import * as BiIcons from "react-icons/bi";
 import * as GiIcons from "react-icons/gi";
 import * as MdIcons from "react-icons/md";
 import * as RiIcons from "react-icons/ri";
+import * as TbIcons from "react-icons/tb";
 // import * as IoIcons from "react-icons/io";
 
 export const SidebarData = [
@@ -60,14 +61,26 @@ export const SidebarData = [
   },
   {
     title: "Movie License",
-    path: "/movielicense    ",
+    path: "/movielicense",
     icon: <RiIcons.RiFilePaperFill />,
     cName: "nav-text",
   },
   {
     title: "Showtime",
-    path: "/showtime    ",
+    path: "/showtime",
     icon: <GiIcons.GiFilmProjector />,
+    cName: "nav-text",
+  },
+  {
+    title: "Reservation",
+    path: "/reservation",
+    icon: <AiIcons.AiFillCheckSquare />,
+    cName: "nav-text",
+  },
+  {
+    title: "Analysis Report",
+    path: "/analysis",
+    icon: <TbIcons.TbReportAnalytics />,
     cName: "nav-text",
   },
 ];
