@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Axios from "axios";
 import UpdateButton from "./EditShowtime";
+import { convertDate, convertTime } from "../../components/UtilFunctions";
 
 function Showtime() {
   const [movID, setMovID] = useState("");
@@ -14,20 +15,10 @@ function Showtime() {
 
   const [showtimeList, setShowtimeList] = useState([]);
 
-  const convertDate = (datetime) => {
-    const date = new Date(datetime).toLocaleDateString("en-GB", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    });
-
-    return date;
-  };
-
   const getShowtime = async () => {
     //Get ALL Showtimes
     await Axios.get("http://localhost:3001/showtime").then((response) => {
-      console.log(response.data);
+    //   console.log(response.data);
       setShowtimeList(response.data);
     });
   };
@@ -54,7 +45,7 @@ function Showtime() {
       <br />
       <div className="showtimeInformation">
         <form action="">
-          {/* moviedetails*/}
+          {/* showtime*/}
           <div className="mb-3">
             <label htmlFor="movie_id" className="form-label">
               Movie ID
@@ -151,7 +142,7 @@ function Showtime() {
               }}
             />
           </div>
-          
+
           <button
             type="button"
             className="btn btn-success"
@@ -175,7 +166,7 @@ function Showtime() {
                 <p className="card-text">Movie ID: {val["movie_id"]}</p>
                 <p className="card-text">Title: {val["title"]}</p>
                 <p className="card-text">Date: {convertDate(val["date"])}</p>
-                <p className="card-text">Showtime: {val["showtime"]}</p>
+                <p className="card-text">Showtime: {convertTime(val["show_time"])}</p>
                 <p className="card-text">Theatre ID: {val["theatre_id"]}</p>
                 <p className="card-text">Air Language: {val["air_language"]}</p>
                 <p className="card-text">Subtitle: {val["subtitle"]}</p>
@@ -185,7 +176,7 @@ function Showtime() {
                 <br />
 
                 {/* UPDATE BUTTON */}
-                {/* <UpdateButton
+                <UpdateButton
                   id={val["showtime_id"]}
                   movID={val["movie_id"]}
                   theaID={val["theatre_id"]}
@@ -194,7 +185,7 @@ function Showtime() {
                   lang={val["air_language"]}
                   sub={val["subtitle"]}
                   free={val["available_seats"]}
-                /> */}
+                />
                 <button
                   className="btn btn-danger"
                   onClick={() => {

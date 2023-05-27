@@ -709,6 +709,31 @@ app.post("/add_showtime", async (req, res) => {
   );
 });
 
+app.put("/edit_showtime", (req, res) => {
+  const id = req.body.movie_id;
+  const movID = req.body.movie_id;
+  const theaID = req.body.theatre_id
+  const showtime = req.body.show_time
+  const date = req.body.date
+  const lang = req.body.air_language
+  const sub = req.body.subtitle
+  const free = req.body.available_seats
+
+  db.query(
+    "UPDATE showtime SET \
+    movie_id = ?, theatre_id = ?, show_time = ?, date = ?, air_language = ?, \
+    subtitle = ?, available_seats = ? WHERE showtime_id = ?",
+    [movID, theaID, showtime, date, lang, sub, free, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 app.delete("/delete_showtime/:id", (req, res) => {
   const id = req.params.id;
   db.query(
