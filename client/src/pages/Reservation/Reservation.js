@@ -2,169 +2,173 @@ import React from "react";
 import { useState } from "react";
 import Axios from "axios";
 import UpdateButton from "./EditReservation";
+import { convertDate} from "../../components/UtilFunctions";
 
 function Reservation() {
-  const [title, setTitle] = useState("");
-  const [crating, setCrating] = useState("");
-  const [length, setLength] = useState("");
-  const [srating, setSrating] = useState(0);
-  const movieStatus = null;
-  const [genre, setGenre] = useState([""]);
+  const [date, setDate] = useState("");
+  const [cusID, setCusID] = useState("");
+  const [showID, setShowID] = useState("");
+  const [seats, setSeats] = useState([""]);
 
-  const [movList, setMovList] = useState([]);
-  const [movGenre, setMovGenre] = useState([]);
-  const [movies, setMovies] = useState([]);
+  const [resList, setResList] = useState([]);
+  const [resSeats, setResSeats] = useState([]);
+  const [reserves, setReserves] = useState([]);
 
   // for multiple inputs
   const handleFormChange = (index, event) => {
-    let data = [...genre];
+    let data = [...seats];
     data[index] = event.target.value;
-    setGenre(data);
-    console.log(genre);
+    setSeats(data);
+    // console.log(seats);
   };
 
   const addFields = () => {
     let newField = "";
-    setGenre([...genre, newField]);
+    setSeats([...seats, newField]);
     // console.log(genre);
   };
 
   const removeFields = (index) => {
-    let data = [...genre];
+    let data = [...seats];
     data.splice(index, 1);
-    setGenre(data);
+    setSeats(data);
   };
   /////
 
-  const getMovies = async () => {
-    //Get ALL Movies
-    await Axios.get("http://localhost:3001/movielist").then((response) => {
-      setMovList(response.data);
-      // console.log(movList)
+  const getReserves = async () => {
+    //Get RESERVED SEATS with price
+    await Axios.get("http://localhost:3001/reservedseats").then((response) => {
+      setResSeats(response.data);
+      //   console.log(resSeats);
     });
 
-    //Get GENRES
-    await Axios.get("http://localhost:3001/moviegenre").then((response) => {
-      setMovGenre(response.data);
-      // console.log(movGenre)
+    //UPDATE TOTAL PRICE
+    const reserveTotal = [];
+    resSeats.forEach((item) => {
+      const existingItem = reserveTotal.find(
+        (obj) => obj.reserve_id === item.reserve_id
+      );
+
+      if (existingItem) {
+        existingItem.price += item.price;
+      } else {
+        reserveTotal.push({ reserve_id: item.reserve_id, price: item.price });
+      }
     });
 
-    //MOVIES + GENRES
-    let movie_genres = movList.map((mov) => {
-      const matching_genres = movGenre
-        .filter((genre) => genre.movie_id === mov.movie_id)
-        .map((item) => item.genre);
-       return { ...mov, genre: matching_genres };
+    reserveTotal.map(async (val, index) => {
+      await Axios.put("http://localhost:3001/edit_reserveprice", {
+        reserve_id: val.reserve_id,
+        price: val.price,
+      });
     });
 
-    setMovies(movie_genres);
-    // console.log(movies)
+    //Get ALL RESERVES
+    await Axios.get("http://localhost:3001/reservation").then((response) => {
+      setResList(response.data);
+      //   console.log(resList);
+    });
+
+    //RESERVATION + SEATS
+    let reserve_seats = resList.map((res) => {
+      const matching_seats = resSeats
+        .filter((seats) => seats.reserve_id === res.reserve_id)
+        .map((item) => item.seat_id);
+      return { ...res, seat_id: matching_seats };
+    });
+
+    setReserves(reserve_seats);
+    // console.log(reserve_seats)
   };
 
-  const addMovies = async () => {
+  const addReserves = async () => {
     const data = {
-      title: title,
-      content_rating: crating,
-      length: length,
-      score_rating: srating,
-      times_aired: 0,
-      movie_status: movieStatus,
+      customer_id: cusID,
+      showtime_id: showID,
+      date: date,
+      total_price: 0,
     };
-    const response1 = await Axios.post(
-      "http://localhost:3001/add_movies",
+    const response = await Axios.post(
+      "http://localhost:3001/add_reservation",
       data
     );
-    const ID = response1.data.insertId;
-    console.log(ID);
+    const ID = response.data.insertId;
+    // console.log(ID);
 
-    genre.map(async (val) => {
-      await Axios.post("http://localhost:3001/add_moviegenre", {
-        movie_id: ID,
-        genre: val,
+    seats.map(async (val) => {
+      await Axios.post("http://localhost:3001/add_reservedseats", {
+        reserve_id: ID,
+        seat_id: val,
       });
     });
   };
 
-  const deleteMovies = (id) => {
-    Axios.delete(`http://localhost:3001/delete_movies/${id}`);
+  const deleteReserves = (id) => {
+    Axios.delete(`http://localhost:3001/delete_reservation/${id}`);
   };
 
   return (
-    <div className="movies">
-      <h1>Movie Registration</h1>
+    <div className="reservation">
+      <h1>Reservation</h1>
       <br />
-      <div className="moviesInformation">
+      <div className="reservesInformation">
         <form action="">
           {/* moviedetails*/}
           <div className="mb-3">
-            <label htmlFor="title" className="form-label">
-              Movie Title
+            <label htmlFor="date" className="form-label">
+              Date
             </label>
             <input
-              type="text"
+              type="date"
               className="form-control"
-              placeholder="Enter title"
+              placeholder="Enter Date"
               onChange={(event) => {
-                setTitle(event.target.value);
+                setDate(event.target.value);
               }}
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="content_rating" className="form-label">
-              Content Rating
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter content rating"
-              onChange={(event) => {
-                setCrating(event.target.value);
-              }}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="length" className="form-label">
-              Length (Minutes)
+            <label htmlFor="customer_id" className="form-label">
+              Customer ID
             </label>
             <input
               type="number"
               className="form-control"
-              placeholder="Enter length"
+              placeholder="Enter Customer ID"
               onChange={(event) => {
-                setLength(event.target.value);
+                setCusID(event.target.value);
               }}
             />
           </div>
-
           <div className="mb-3">
-            <label htmlFor="score_rating" className="form-label">
-              Score Rating
+            <label htmlFor="showtime_id" className="form-label">
+              Showtime ID
             </label>
             <input
               type="number"
               className="form-control"
-              placeholder="Enter score"
+              placeholder="Enter showtime ID"
               onChange={(event) => {
-                setSrating(event.target.value);
+                setShowID(event.target.value);
               }}
             />
           </div>
 
           {/* label */}
           <div className="mb-3">
-            <label htmlFor="genre" className="form-label">
-              Genres
+            <label htmlFor="seats" className="form-label">
+              Seats
             </label>
           </div>
 
-          {/* genre */}
-          {genre.map((input, index) => {
+          {/* seats */}
+          {seats.map((input, index) => {
             return (
               <div className="mb-3" key={index}>
                 <input
-                  type="text"
+                  type="number"
                   className="form-control multi-row"
-                  placeholder="Enter genre"
+                  placeholder="Enter seat id"
                   onChange={(event) => handleFormChange(index, event)}
                 />
                 <button
@@ -182,51 +186,50 @@ function Reservation() {
             type="button"
             onClick={addFields}
           >
-            Add More Genre
+            Add More Seats
           </button>
           <br />
           <br />
-          <button type="button" className="btn btn-success" onClick={addMovies}>
-            Add Movies
+          <button
+            type="button"
+            className="btn btn-success"
+            onClick={addReserves}
+          >
+            Add Reservation
           </button>
         </form>
       </div>
       <hr />
-      <div className="moviesButton">
-        <button className="btn btn-primary" onClick={getMovies}>
-          Refresh Movie List
+      <div className="reservesButton">
+        <button className="btn btn-primary" onClick={getReserves}>
+          Refresh Reservation List
         </button>
         <br />
         <br />
-        {movies.map((val, key) => {
+        {reserves.map((val, key) => {
           return (
-            <div className="moviess card">
+            <div className="reservess card">
               <div className="card-body text-left">
-                <p className="card-text">Movie ID: {val["movie_id"]}</p>
-                <p className="card-text">Title: {val["title"]}</p>
-                <p className="card-text">
-                  Content rating: {val["content_rating"]}
-                </p>
-                <p className="card-text">Length: {val["length"]}</p>
-                <p className="card-text">Score Rating: {val["score_rating"]}</p>
-                <p className="card-text">Movie Status: {val["movie_status"]}</p>
-                <p className="card-text">Times Aired: {val["times_aired"]}</p>
-                <p className="card-text">Genre: {val["genre"].join(", ")}</p>
+                <p className="card-text">Reservation ID: {val["reserve_id"]}</p>
+                <p className="card-text">Reserve Date: {convertDate(val["date"])}</p>
+                <p className="card-text">Customer ID: {val["customer_id"]}</p>
+                <p className="card-text">Showtime ID: {val["showtime_id"]}</p>
+                <p className="card-text">Total Price: {val["total_price"]}</p>
+                <p className="card-text">Seats: {val["seat_id"].join(", ")}</p>
                 <br />
 
                 {/* UPDATE BUTTON */}
                 <UpdateButton
-                  id={val["movie_id"]}
-                  title={val["title"]}
-                  crating={val["content_rating"]}
-                  length={val["length"]}
-                  srating={val["score_rating"]}
-                  genre={val["genre"]}
+                  id={val["reserve_id"]}
+                  date={val["date"]}
+                  cusID={val["customer_id"]}
+                  showID={val["showtime_id"]}
+                  seat={val["seat_id"]}
                 />
                 <button
                   className="btn btn-danger"
                   onClick={() => {
-                    deleteMovies(val["movie_id"]);
+                    deleteReserves(val["reserve_id"]);
                   }}
                 >
                   Delete

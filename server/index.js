@@ -689,12 +689,12 @@ app.get("/showtime", async (req, res) => {
 
 app.post("/add_showtime", async (req, res) => {
   const movID = req.body.movie_id;
-  const theaID = req.body.theatre_id
+  const theaID = req.body.theatre_id;
   const showtime = req.body.show_time;
   const date = req.body.date;
-  const lang = req.body.air_language
-  const sub = req.body.subtitle
-  const free = req.body.available_seats
+  const lang = req.body.air_language;
+  const sub = req.body.subtitle;
+  const free = req.body.available_seats;
 
   db.query(
     "INSERT INTO showtime (movie_id, theatre_id, show_time, date, air_language, subtitle, available_seats) VALUES (?,?,?,?,?,?,?)",
@@ -712,12 +712,12 @@ app.post("/add_showtime", async (req, res) => {
 app.put("/edit_showtime", (req, res) => {
   const id = req.body.movie_id;
   const movID = req.body.movie_id;
-  const theaID = req.body.theatre_id
-  const showtime = req.body.show_time
-  const date = req.body.date
-  const lang = req.body.air_language
-  const sub = req.body.subtitle
-  const free = req.body.available_seats
+  const theaID = req.body.theatre_id;
+  const showtime = req.body.show_time;
+  const date = req.body.date;
+  const lang = req.body.air_language;
+  const sub = req.body.subtitle;
+  const free = req.body.available_seats;
 
   db.query(
     "UPDATE showtime SET \
@@ -735,11 +735,11 @@ app.put("/edit_showtime", (req, res) => {
 });
 
 app.put("/edit_timesaired", (req, res) => {
-  const id = req.body.movie_id
-  const times = req.body.times_aired
+  const id = req.body.movie_id;
+  const times = req.body.times_aired;
 
   db.query(
-  "UPDATE movies SET times_aired = ? WHERE movie_id = ?",
+    "UPDATE movies SET times_aired = ? WHERE movie_id = ?",
     [times, id],
     (err, result) => {
       if (err) {
@@ -753,9 +753,22 @@ app.put("/edit_timesaired", (req, res) => {
 
 app.delete("/delete_showtime/:id", (req, res) => {
   const id = req.params.id;
+  db.query("DELETE FROM showtime WHERE showtime_id = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+//SHOWTIME//////////////////////////////////////////////////////////////////////
+
+//RESERVATION///////////////////////////////////////////////////////////////////
+//get
+app.get("/reservation", async (req, res) => {
   db.query(
-    "DELETE FROM showtime WHERE showtime_id = ?",
-    id,
+    "SELECT r.*, sh.theatre_id FROM \
+    reservation r, showtime sh WHERE r.showtime_id = sh.showtime_id",
     (err, result) => {
       if (err) {
         console.log(err);
@@ -765,13 +778,128 @@ app.delete("/delete_showtime/:id", (req, res) => {
     }
   );
 });
-//SHOWTIME//////////////////////////////////////////////////////////////////////
 
+app.get("/reservedseats", async (req, res) => {
+  const query1 =
+    "SELECT r.*, s.seat_no \
+  FROM reservedseats r, seatdetails s, seatpricehistory sp WHERE r.seat_id = s.seat_id";
 
-//UNIVERSAL/////////////////////////////////////////////////////////////////////
+  const queryWithPrice =
+    "SELECT r.*, s.seat_no, sp.price \
+    FROM reservedseats r JOIN seatdetails s \
+    ON r.seat_id = s.seat_id \
+    JOIN( SELECT sp.* FROM seatpricehistory sp \
+    JOIN( SELECT seat_id, MAX(DATE) AS max_date \
+    FROM seatpricehistory GROUP BY seat_id ) AS t2 \
+    ON sp.seat_id = t2.seat_id AND sp.date = t2.max_date ) AS sp \
+    ON r.seat_id = sp.seat_id";
 
-//UNIVERSAL/////////////////////////////////////////////////////////////////////
+  db.query(queryWithPrice, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
 
+//add
+app.post("/add_reservation", async (req, res) => {
+  const date = req.body.date
+  const cusID = req.body.customer_id
+  const showID = req.body.showtime_id
+  const totalp = req.body.total_price
+
+  db.query(
+    "INSERT INTO reservation (date, customer_id, showtime_id, total_price) VALUES (?,?,?,?)",
+    [date, cusID, showID, totalp],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/add_reservedseats", async (req, res) => {
+  const resID = req.body.reserve_id
+  const seatID = req.body.seat_id
+
+  db.query(
+    "INSERT INTO reservedseats (reserve_id, seat_id) VALUES (?,?)",
+    [resID, seatID],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//updates
+app.put("/edit_reserveprice", (req, res) => {
+  const id = req.body.reserve_id;
+  const price = req.body.price;
+
+  db.query(
+    "UPDATE reservation SET total_price = ? WHERE reserve_id = ?",
+    [price, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.put("/edit_reservation", (req, res) => {
+  const id = req.body.reserve_id;
+  const date = req.body.date
+  const cusID = req.body.customer_id
+  const showID = req.body.showtime_id
+
+  db.query(
+    "UPDATE reservation SET date = ?, customer_id = ?, showtime_id = ? WHERE reserve_id = ?",
+    [date, cusID, showID, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//delete
+app.delete("/delete_reservation/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("DELETE FROM reservation WHERE reserve_id = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.delete("/delete_reservedseats/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("DELETE FROM reservedseats WHERE reserve_id = ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+//RESERVATION///////////////////////////////////////////////////////////////////
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");

@@ -36,10 +36,10 @@ function Showtime() {
     });
 
     movieAirCount.map(async (val, index) => {
-        await Axios.put("http://localhost:3001/edit_timesaired",{
-            movie_id: val.movie_id,
-            times_aired: val.count
-        })
+      await Axios.put("http://localhost:3001/edit_timesaired", {
+        movie_id: val.movie_id,
+        times_aired: val.count,
+      });
     });
   };
 
