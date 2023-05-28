@@ -66,7 +66,10 @@ export default function () {
             {" "}
             {/*INSERT NEW DUMMY BRANCH_ID AND MONTH FILTER HERE */}
             <option value="all">All</option>
+            <option value="April2023">April 2023</option>
             <option value="May2023">May 2023</option>
+            <option value="June2023">June 2023</option>
+            <option value="July2023">July 2023</option>
           </select>
         </div>
       </div>
@@ -80,7 +83,11 @@ export default function () {
               </th>
               <th className="col">
                 {" "}
-                <h3>Revenue<br />(From this showtime)</h3>
+                <h3>
+                  Revenue
+                  <br />
+                  (From this showtime)
+                </h3>
               </th>
               <th className="col">
                 {" "}

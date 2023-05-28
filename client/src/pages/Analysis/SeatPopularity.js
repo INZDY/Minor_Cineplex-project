@@ -65,7 +65,10 @@ export default function () {
           <select onChange={Monthhandler}>
             {" "}
             {/*INSERT NEW DUMMY BRANCH_ID AND MONTH FILTER HERE */}
-            <option value="may2023">May 2023</option>
+            <option value="April2023">April 2023</option>
+            <option value="May2023">May 2023</option>
+            <option value="June2023">June 2023</option>
+            <option value="July2023">July 2023</option>
           </select>
         </div>
       </div>

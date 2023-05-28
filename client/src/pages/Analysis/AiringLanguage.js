@@ -66,54 +66,61 @@ export default function () {
             {" "}
             {/*INSERT NEW DUMMY BRANCH_ID AND MONTH FILTER HERE */}
             <option value="all">All</option>
+            <option value="April2023">April 2023</option>
             <option value="May2023">May 2023</option>
+            <option value="June2023">June 2023</option>
+            <option value="July2023">July 2023</option>
           </select>
         </div>
       </div>
-        <div className="analysistable">
-          <table className="table">
-            <thead>
-              <tr className="row">
-                <th className="col">
-                  {" "}
-                  <h3>Movie</h3>
-                </th>
-                <th className="col">
-                  {" "}
-                  <h3>Airing Language</h3>
-                </th>
-                <th className="col">
-                  {" "}
-                  <h3>Subtitle</h3>
-                </th>
-                <th className="col">
-                  {" "}
-                  <h3>Revenue<br/>(From specific dub/sub)</h3>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {TableList.map((val, key) => {
-                return (
-                  <tr className="row">
-                    <th className="col">
-                      <p>{val["title"]}</p>
-                    </th>
-                    <th className="col">
-                      <p>{val["air_language"]}</p>
-                    </th>
-                    <th className="col">
-                      <p>{val["subtitle"]}</p>
-                    </th>
-                    <th className="col">
-                      <p>{val["amount"]}</p>
-                    </th>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+      <div className="analysistable">
+        <table className="table">
+          <thead>
+            <tr className="row">
+              <th className="col">
+                {" "}
+                <h3>Movie</h3>
+              </th>
+              <th className="col">
+                {" "}
+                <h3>Airing Language</h3>
+              </th>
+              <th className="col">
+                {" "}
+                <h3>Subtitle</h3>
+              </th>
+              <th className="col">
+                {" "}
+                <h3>
+                  Revenue
+                  <br />
+                  (From specific dub/sub)
+                </h3>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {TableList.map((val, key) => {
+              return (
+                <tr className="row">
+                  <th className="col">
+                    <p>{val["title"]}</p>
+                  </th>
+                  <th className="col">
+                    <p>{val["air_language"]}</p>
+                  </th>
+                  <th className="col">
+                    <p>{val["subtitle"]}</p>
+                  </th>
+                  <th className="col">
+                    <p>{val["amount"]}</p>
+                  </th>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

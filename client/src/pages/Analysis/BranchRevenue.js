@@ -89,9 +89,10 @@ export default function () {
           <select onChange={Month1handler}>
             {" "}
             {/*INSERT NEW DUMMY Day1_ID AND Month1 FILTER HERE */}
+            <option value="April2023">April 2023</option>
             <option value="May2023">May 2023</option>
             <option value="June2023">June 2023</option>
-            <option value="June2023">July 2023</option>
+            <option value="July2023">July 2023</option>
           </select>
         </div>
         <h4>Select End Date</h4>
@@ -134,9 +135,10 @@ export default function () {
           <select onChange={Month2handler}>
             {" "}
             {/*INSERT NEW DUMMY Day1_ID AND Month1 FILTER HERE */}
+            <option value="April2023">April 2023</option>
             <option value="May2023">May 2023</option>
             <option value="June2023">June 2023</option>
-            <option value="June2023">July 2023</option>
+            <option value="July2023">July 2023</option>
           </select>
         </div>
       </div>
