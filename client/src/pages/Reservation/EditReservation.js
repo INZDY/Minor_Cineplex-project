@@ -55,7 +55,7 @@ function UpdateButton(props) {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="primary btn-sm" onClick={handleShow}>
         Update
       </Button>
 

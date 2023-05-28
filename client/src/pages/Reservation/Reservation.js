@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Axios from "axios";
 import UpdateButton from "./EditReservation";
-import { convertDate} from "../../components/UtilFunctions";
+import { convertDate } from "../../components/UtilFunctions";
 
 function Reservation() {
   const [date, setDate] = useState("");
@@ -77,8 +77,13 @@ function Reservation() {
       return { ...res, seat_id: matching_seats };
     });
 
+    //SORT BY reserve_id
+    reserve_seats.sort((a, b) => {
+      return a.reserve_id < b.reserve_id ? -1 : 1;
+    });
+
     setReserves(reserve_seats);
-    // console.log(reserve_seats)
+    // console.log(reserve_seats);
   };
 
   const addReserves = async () => {
@@ -108,136 +113,155 @@ function Reservation() {
   };
 
   return (
-    <div className="reservation">
-      <h1>Reservation</h1>
-      <br />
-      <div className="reservesInformation">
-        <form action="">
-          {/* moviedetails*/}
-          <div className="mb-3">
-            <label htmlFor="date" className="form-label">
-              Date
-            </label>
-            <input
-              type="date"
-              className="form-control"
-              placeholder="Enter Date"
-              onChange={(event) => {
-                setDate(event.target.value);
-              }}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="customer_id" className="form-label">
-              Customer ID
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              placeholder="Enter Customer ID"
-              onChange={(event) => {
-                setCusID(event.target.value);
-              }}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="showtime_id" className="form-label">
-              Showtime ID
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              placeholder="Enter showtime ID"
-              onChange={(event) => {
-                setShowID(event.target.value);
-              }}
-            />
-          </div>
-
-          {/* label */}
-          <div className="mb-3">
-            <label htmlFor="seats" className="form-label">
-              Seats
-            </label>
-          </div>
-
-          {/* seats */}
-          {seats.map((input, index) => {
-            return (
-              <div className="mb-3" key={index}>
-                <input
-                  type="number"
-                  className="form-control multi-row"
-                  placeholder="Enter seat id"
-                  onChange={(event) => handleFormChange(index, event)}
-                />
-                <button
-                  className="btn btn-secondary"
-                  type="button"
-                  onClick={removeFields}
-                >
-                  Remove
-                </button>
-              </div>
-            );
-          })}
-          <button
-            className="btn btn-secondary"
-            type="button"
-            onClick={addFields}
-          >
-            Add More Seats
-          </button>
-          <br />
-          <br />
-          <button
-            type="button"
-            className="btn btn-success"
-            onClick={addReserves}
-          >
-            Add Reservation
-          </button>
-        </form>
-      </div>
-      <hr />
-      <div className="reservesButton">
-        <button className="btn btn-primary" onClick={getReserves}>
-          Refresh Reservation List
-        </button>
+    <div className="pagecontainer">
+      <div className="reservation">
+        <h1>Reservation</h1>
         <br />
-        <br />
-        {reserves.map((val, key) => {
-          return (
-            <div className="reservess card">
-              <div className="card-body text-left">
-                <p className="card-text">Reservation ID: {val["reserve_id"]}</p>
-                <p className="card-text">Reserve Date: {convertDate(val["date"])}</p>
-                <p className="card-text">Customer ID: {val["customer_id"]}</p>
-                <p className="card-text">Showtime ID: {val["showtime_id"]}</p>
-                <p className="card-text">Total Price: {val["total_price"]}</p>
-                <p className="card-text">Seats: {val["seat_id"].join(", ")}</p>
-                <br />
-
-                {/* UPDATE BUTTON */}
-                <UpdateButton
-                  id={val["reserve_id"]}
-                  date={val["date"]}
-                  cusID={val["customer_id"]}
-                  showID={val["showtime_id"]}
-                  seat={val["seat_id"]}
-                />
-                <button
-                  className="btn btn-danger"
-                  onClick={() => {
-                    deleteReserves(val["reserve_id"]);
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
+        <div className="reservesInformation">
+          <form action="">
+            {/* moviedetails*/}
+            <div className="mb-3">
+              <label htmlFor="date" className="form-label">
+                Date
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                placeholder="Enter Date"
+                onChange={(event) => {
+                  setDate(event.target.value);
+                }}
+              />
             </div>
-          );
-        })}
+            <div className="mb-3">
+              <label htmlFor="customer_id" className="form-label">
+                Customer ID
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Enter Customer ID"
+                onChange={(event) => {
+                  setCusID(event.target.value);
+                }}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="showtime_id" className="form-label">
+                Showtime ID
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Enter showtime ID"
+                onChange={(event) => {
+                  setShowID(event.target.value);
+                }}
+              />
+            </div>
+
+            {/* label */}
+            <div className="mb-3">
+              <label htmlFor="seats" className="form-label">
+                Seats
+              </label>
+            </div>
+
+            {/* seats */}
+            {seats.map((input, index) => {
+              return (
+                <div className="mb-3" key={index}>
+                  <input
+                    type="number"
+                    className="form-control multi-row"
+                    placeholder="Enter seat id"
+                    onChange={(event) => handleFormChange(index, event)}
+                  />
+                  <button
+                    className="btn btn-secondary"
+                    type="button"
+                    onClick={removeFields}
+                  >
+                    Remove
+                  </button>
+                </div>
+              );
+            })}
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={addFields}
+            >
+              Add More Seats
+            </button>
+            <br />
+            <br />
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={addReserves}
+            >
+              Add Reservation
+            </button>
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={getReserves}
+            >
+              Refresh Reservation List
+            </button>
+          </form>
+        </div>
+        <hr />
+      </div>
+      <div className="refreshButton">
+        <div className="table-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Reservation ID</th>
+                <th scope="col">Reserve Date</th>
+                <th scope="col">Customer ID</th>
+                <th scope="col">Showtime ID</th>
+                <th scope="col">Total Price</th>
+                <th scope="col">Seat ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reserves.map((val, key) => {
+                return (
+                  <tr>
+                    <th>{val["reserve_id"]}</th>
+                    <th>{convertDate(val["date"])}</th>
+                    <th>{val["customer_id"]}</th>
+                    <th>{val["showtime_id"]}</th>
+                    <th>{val["total_price"]}</th>
+                    <th>{val["seat_id"].join(", ")}</th>
+                    <th>
+                      <UpdateButton
+                        id={val["reserve_id"]}
+                        date={val["date"]}
+                        cusID={val["customer_id"]}
+                        showID={val["showtime_id"]}
+                        seat={val["seat_id"]}
+                      />
+                    </th>
+                    <th>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => {
+                          deleteReserves(val["customer_id"]);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </th>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

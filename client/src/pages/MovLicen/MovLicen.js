@@ -83,114 +83,129 @@ function MovLicen() {
   };
 
   return (
-    <div className="movielicense">
-      <h1>Movie Licensing</h1>
-      <br />
-      <div className="moviesInformation">
-        <form action="">
-          {/* moviedetails*/}
-          <div className="mb-3">
-            <label htmlFor="movie_id" className="form-label">
-              Movie ID
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              placeholder="Enter movie id"
-              onChange={(event) => {
-                setMovID(event.target.value);
-              }}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="license_start" className="form-label">
-              License Start
-            </label>
-            <input
-              type="date"
-              className="form-control"
-              onChange={(event) => {
-                setLicStart(event.target.value);
-              }}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="license_end" className="form-label">
-              License End
-            </label>
-            <input
-              type="date"
-              className="form-control"
-              onChange={(event) => {
-                setLicEnd(event.target.value);
-              }}
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="movie_cost" className="form-label">
-              Cost
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              placeholder="Enter cost"
-              onChange={(event) => {
-                setCost(event.target.value);
-              }}
-            />
-          </div>
-
-          <button
-            type="button"
-            className="btn btn-success"
-            onClick={addLicense}
-          >
-            Add Movie License
-          </button>
-        </form>
-      </div>
-      <hr />
-      <div className="moviesButton">
-        <button className="btn btn-primary" onClick={getLicense}>
-          Refresh License List
-        </button>
+    <div className="pagecontainer">
+      <div className="movielicense">
+        <h1>Movie Licensing</h1>
         <br />
-        <br />
-        {licenList.map((val, key) => {
-          return (
-            <div className="licenses card">
-              <div className="card-body text-left">
-                <p className="card-text">Movie ID: {val["movie_id"]}</p>
-                <p className="card-text">
-                  License Start: {convertDate(val["license_start"])}
-                </p>
-                <p className="card-text">
-                  License End: {convertDate(val["license_end"])}
-                </p>
-                <p className="card-text">Cost: {val["movie_cost"]}</p>
-                <br />
-
-                {/* UPDATE BUTTON */}
-                <UpdateButton
-                  id={val["license_id"]}
-                  movID={val["movie_id"]}
-                  licS={val["license_start"]}
-                  licE={val["license_end"]}
-                  cost={val["movie_cost"]}
-                />
-                <button
-                  className="btn btn-danger"
-                  onClick={() => {
-                    deleteLicense(val["license_id"]);
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
+        <div className="moviesInformation">
+          <form action="">
+            {/* moviedetails*/}
+            <div className="mb-3">
+              <label htmlFor="movie_id" className="form-label">
+                Movie ID
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Enter movie id"
+                onChange={(event) => {
+                  setMovID(event.target.value);
+                }}
+              />
             </div>
-          );
-        })}
+            <div className="mb-3">
+              <label htmlFor="license_start" className="form-label">
+                License Start
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                onChange={(event) => {
+                  setLicStart(event.target.value);
+                }}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="license_end" className="form-label">
+                License End
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                onChange={(event) => {
+                  setLicEnd(event.target.value);
+                }}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="movie_cost" className="form-label">
+                Cost
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Enter cost"
+                onChange={(event) => {
+                  setCost(event.target.value);
+                }}
+              />
+            </div>
+
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={addLicense}
+            >
+              Add Movie License
+            </button>
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={getLicense}
+            >
+              Refresh License List
+            </button>
+          </form>
+        </div>
+        <hr />
+      </div>
+      <div className="refreshButton">
+        <div className="table-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Movie ID</th>
+                <th scope="col">License Start</th>
+                <th scope="col">License End</th>
+                <th scope="col">Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              {licenList.map((val, key) => {
+                return (
+                  <tr>
+                    <th>{val["license_id"]}</th>
+                    <th>{val["movie_id"]}</th>
+                    <th>{val["license_start"]}</th>
+                    <th>{val["license_end"]}</th>
+                    <th>{val["license_end"]}</th>
+                    <th>{val["movie_cost"]}</th>
+                    <th>
+                      <UpdateButton
+                        id={val["license_id"]}
+                        movID={val["movie_id"]}
+                        licS={val["license_start"]}
+                        licE={val["license_end"]}
+                        cost={val["movie_cost"]}
+                      />
+                    </th>
+                    <th>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => {
+                          deleteLicense(val["customer_id"]);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </th>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
