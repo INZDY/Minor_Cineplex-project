@@ -910,8 +910,8 @@ app.put("/edit_reservation", (req, res) => {
 });
 
 app.put("/edit_showtimeavailableseats", (req, res) => {
-  const showID = req.body.showtime_id
-  const count = req.body.count
+  const showID = req.body.showtime_id;
+  const count = req.body.count;
 
   db.query(
     "UPDATE showtime\
@@ -1642,7 +1642,7 @@ app.get("/AnalysisRevenue/:day1/:month1/:day2/:month2", async (req, res) => {
 
   db.query(
     "SELECT DISTINCT branch.branch_id AS Branch,movies.title AS Movie,\
-   (SELECT SUM(reservation.total_price) FROM reservation WHERE reservation.showtime_id = showtime.showtime_id) AS Revenue,\
+   (SELECT SUM(reservation.total_price) FROM reservation WHERE reservation.showtime_id = showtime.showtime_id AND reservation.date > STR_TO_DATE(CONCAT(?,?),'%d%M%Y') AND reservation.date < STR_TO_DATE(CONCAT(?,?),'%d%M%Y')) AS Revenue,\
    (SELECT revenue - movielicense.movie_cost FROM movielicense WHERE movielicense.movie_id = movies.movie_id) AS Profit\
   FROM branch\
   INNER JOIN theatre ON theatre.branch_id = branch.branch_id\
@@ -1650,7 +1650,7 @@ app.get("/AnalysisRevenue/:day1/:month1/:day2/:month2", async (req, res) => {
   INNER JOIN movies ON movies.movie_id = showtime.movie_id\
   INNER JOIN reservation ON reservation.showtime_id = showtime.showtime_id\
   INNER JOIN movielicense ON movielicense.movie_id = movies.movie_id\
-  WHERE reservation.date > STR_TO_DATE(CONCAT(?,?),'%d%M%Y') AND reservation.date < STR_TO_DATE(CONCAT(?,?),'%d%M%Y');",
+  ",
     [day1, month1, day2, month2],
     (err, result) => {
       if (err) {
