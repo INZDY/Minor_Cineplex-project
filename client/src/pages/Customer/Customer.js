@@ -51,7 +51,6 @@ function Customer() {
         },
       ]);
     });
-    //console.log(customerList);
   };
 
   const deleteCustomer = (id) => {

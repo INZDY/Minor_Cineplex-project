@@ -1550,7 +1550,7 @@ app.get("/AnalysisAiring/:branch/:month", async (req, res) => {
       );
     } else {
       db.query(
-        "SELECT DISTINCT movies.title, moviegenre.genre, showtime.air_language, showtime.subtitle,\
+        "SELECT DISTINCT movies.title, showtime.air_language, showtime.subtitle,\
         (SELECT SUM(reservation.total_price)\
          FROM reservation\
          WHERE reservation.showtime_id = showtime.showtime_id AND reservation.Date >= STR_TO_DATE(CONCAT('01 ',?),'%d %M%Y') AND reservation.Date <= LAST_DAY(STR_TO_DATE(CONCAT('01 ',?),'%d %M%Y'))) AS amount ,branch.branch_name\
@@ -1578,7 +1578,7 @@ app.get("/AnalysisAiring/:branch/:month", async (req, res) => {
   } else {
     if (month == "all") {
       db.query(
-        "SELECT DISTINCT movies.title, moviegenre.genre, showtime.air_language, showtime.subtitle,\
+        "SELECT DISTINCT movies.title, showtime.air_language, showtime.subtitle,\
         (SELECT SUM(reservation.total_price)\
          FROM reservation\
          WHERE reservation.showtime_id = showtime.showtime_id) AS amount ,branch.branch_name\
@@ -1604,7 +1604,7 @@ app.get("/AnalysisAiring/:branch/:month", async (req, res) => {
       );
     } else {
       db.query(
-        "SELECT DISTINCT movies.title, moviegenre.genre, showtime.air_language, showtime.subtitle,\
+        "SELECT DISTINCT movies.title, showtime.air_language, showtime.subtitle,\
         (SELECT SUM(reservation.total_price)\
          FROM reservation\
          WHERE reservation.showtime_id = showtime.showtime_id AND reservation.Date >= STR_TO_DATE(CONCAT('01 ',?),'%d %M%Y') AND reservation.Date <= LAST_DAY(STR_TO_DATE(CONCAT('01 ',?),'%d %M%Y'))) AS amount ,branch.branch_name\
