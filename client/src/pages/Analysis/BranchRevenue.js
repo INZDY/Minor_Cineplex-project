@@ -44,8 +44,8 @@ export default function () {
   };
 
   return (
-    <>
-      <div className="pagecontainer customer">
+    <div className="pagecontainer">
+      <div className="reports">
         {" "}
         {/* className should be change to something else .Punch*/}
         <h1>Branches' Revenue Analysis report</h1>
@@ -139,6 +139,8 @@ export default function () {
             <option value="June2023">July 2023</option>
           </select>
         </div>
+      </div>
+      <div className="analysistable">
         <table className="table">
           <thead>
             <tr className="row">
@@ -152,7 +154,7 @@ export default function () {
               </th>
               <th className="col">
                 {" "}
-                <h4>Revenue (Thousand Unit)</h4>
+                <h4>Revenue</h4>
               </th>
               <th className="col">
                 {" "}
@@ -182,6 +184,6 @@ export default function () {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 }

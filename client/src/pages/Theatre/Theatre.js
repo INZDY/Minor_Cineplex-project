@@ -166,42 +166,6 @@ function Theatre() {
           </table>
         </div>
       </div>
-
-      <div className="theatreButton">
-        <br />
-        <br />
-        {theatreList.map((val, key) => {
-          return (
-            <div className="theatres card">
-              <div className="card-body text-left">
-                <p className="card-text">ID: {val["theatre_id"]}</p>
-                <p className="card-text">Theatre No: {val["theatre_no"]}</p>
-                <p className="card-text">Branch ID: {val["branch_id"]}</p>
-                <p className="card-text">Capacity: {val["capacity"]}</p>
-                <p className="card-text">Theatre Type: {val["theatre_type"]}</p>
-                <br />
-
-                {/* UPDATE BUTTON */}
-                <UpdateButton
-                  id={val["theatre_id"]}
-                  theatre_no={val["theatre_no"]}
-                  branch_id={val["branch_id"]}
-                  capacity={val["capacity"]}
-                  type={val["theatre_type"]}
-                />
-                <button
-                  className="btn btn-danger"
-                  onClick={() => {
-                    deleteTheatre(val["theatre_id"]);
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          );
-        })}
-      </div>
     </div>
   );
 }

@@ -25,7 +25,8 @@
 .movies, 
 .movielicense,
 .showtime,
-.reservation{
+.reservation,
+.reports{
   display: flex;
   /* margin: 175px; */
   /* margin-top: 25px; */

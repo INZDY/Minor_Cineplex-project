@@ -34,8 +34,8 @@ export default function () {
   };
 
   return (
-    <>
-      <div className="pagecontainer customer">
+    <div className="pagecontainer">
+      <div className="reports">
         {" "}
         {/* className should be change to something else .Punch*/}
         <h1>Showtime popularity Analysis report</h1>
@@ -45,7 +45,8 @@ export default function () {
           </h2>
         ) : (
           <h2>
-            Branch name : {TableList[0].branch_name}{" "}
+            Branch name :{" "}
+            {TableList.length === 0 ? "No Data" : TableList[0].branch_name}{" "}
             {Month === "all" ? ", All month" : ""}
           </h2>
         )}
@@ -68,6 +69,8 @@ export default function () {
             <option value="May2023">May 2023</option>
           </select>
         </div>
+      </div>
+      <div className="analysistable">
         <table className="table">
           <thead>
             <tr className="row">
@@ -104,6 +107,6 @@ export default function () {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 }

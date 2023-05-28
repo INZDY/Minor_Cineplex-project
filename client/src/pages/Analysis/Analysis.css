@@ -31,3 +31,10 @@
     align-items: center;
     padding: 1rem;
 }
+
+.analysistable{
+    margin: 0px 80px;
+  padding: 0px 20px;
+  border-radius: 4px;
+  background-color: #ffefcb;
+}
