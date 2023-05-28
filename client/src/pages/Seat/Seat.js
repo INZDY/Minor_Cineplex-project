@@ -72,20 +72,17 @@ function Seat() {
   /////
 
   const addSeat = async () => {
+
+    //DONT ADD IF FULL
     const response1 = await Axios.get(
       `http://localhost:3001/theatreseatcount/${theatreID}`
     );
-    // console.log(response1);
 
     const seatCountTheatre = response1.data;
-    // console.log(seatCountTheatre)
-    // console.log(seatCountTheatre[0].capacity, seatCountTheatre[0].count);
 
     if (seatCountTheatre[0].capacity === seatCountTheatre[0].count) {
-      // console.log("FULL");
       return "Full";
     }
-    // console.log("NOTFULL");
 
     inputFields.map(async (input, index) => {
       const response = await Axios.post(

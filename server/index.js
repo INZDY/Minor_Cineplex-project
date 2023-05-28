@@ -431,7 +431,6 @@ app.post("/add_seatdetails", (req, res) => {
   const theatreID = req.body.theatre_id;
   const type = req.body.seat_type;
 
-  //insert as a new seat if it is not already present
   db.query(
     "INSERT INTO seatdetails (seat_no, theatre_id, seat_type) VALUES (?,?,?)",
     [seatNO, theatreID, type],
@@ -451,7 +450,6 @@ app.post("/add_seathistory", (req, res) => {
   const price = req.body.price;
   const staffID = req.body.staff_id;
 
-  //insert only if before != after
   db.query(
     "INSERT INTO seatpricehistory (seat_id, date, price, staff_id) VALUES (?,?,?,?)",
     [seatID, date, price, staffID],
@@ -820,6 +818,23 @@ app.get("/reservedseats", async (req, res) => {
   });
 });
 
+app.get("/showtimeavailableseats/:showID", (req, res) => {
+  const showID = req.params.showID;
+  db.query(
+    "SELECT available_seats AS count \
+    FROM showtime \
+    WHERE showtime_id = ?",
+    [showID],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 //add
 app.post("/add_reservation", async (req, res) => {
   const date = req.body.date;
@@ -884,6 +899,27 @@ app.put("/edit_reservation", (req, res) => {
   db.query(
     "UPDATE reservation SET date = ?, customer_id = ?, showtime_id = ? WHERE reserve_id = ?",
     [date, cusID, showID, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.put("/edit_showtimeavailableseats", (req, res) => {
+  const showID = req.body.showtime_id
+  const count = req.body.count
+
+  db.query(
+    "UPDATE showtime\
+    SET available_seats = (SELECT (t.capacity - ?) \
+                          FROM theatre t \
+                          WHERE t.theatre_id = showtime.theatre_id) \
+   WHERE showtime_id = ?",
+    [count, showID],
     (err, result) => {
       if (err) {
         console.log(err);

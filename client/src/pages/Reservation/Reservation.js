@@ -39,7 +39,7 @@ function Reservation() {
     //Get RESERVED SEATS with price
     await Axios.get("http://localhost:3001/reservedseats").then((response) => {
       setResSeats(response.data);
-      //   //console.log(resSeats);
+      // console.log(resSeats);
     });
 
     //UPDATE TOTAL PRICE
@@ -62,31 +62,64 @@ function Reservation() {
         price: val.price,
       });
     });
-
+    
     //Get ALL RESERVES
     await Axios.get("http://localhost:3001/reservation").then((response) => {
       setResList(response.data);
-      //   //console.log(resList);
+      //console.log(resList);
     });
-
+    
     //RESERVATION + SEATS
     let reserve_seats = resList.map((res) => {
       const matching_seats = resSeats
-        .filter((seats) => seats.reserve_id === res.reserve_id)
-        .map((item) => item.seat_id);
+      .filter((seats) => seats.reserve_id === res.reserve_id)
+      .map((item) => item.seat_id);
       return { ...res, seat_id: matching_seats };
     });
-
+    
     //SORT BY reserve_id
     reserve_seats.sort((a, b) => {
       return a.reserve_id < b.reserve_id ? -1 : 1;
     });
-
+    
     setReserves(reserve_seats);
-    // //console.log(reserve_seats);
+    // console.log(reserve_seats);
+
+    //UPDATE available seats
+    const showtimeSeatCount = [];
+
+    reserves.forEach((item) => {
+      const existingItem = showtimeSeatCount.find(obj => obj.showtime_id === item.showtime_id)
+      if(existingItem){
+        existingItem.count += item.seat_id.length
+      }else{
+        showtimeSeatCount.push({showtime_id: item.showtime_id, count: item.seat_id.length})
+      }
+    })
+
+    showtimeSeatCount.map(async (val, key) => {
+      await Axios.put("http://localhost:3001/edit_showtimeavailableseats", {
+        showtime_id: val.showtime_id,
+        count: val.count
+      })
+    })
+
   };
 
   const addReserves = async () => {
+
+    //DONT ADD IF FULL
+    const response1 = await Axios.get(
+      `http://localhost:3001/showtimeavailableseats/${showID}`
+    );
+
+    const availableSeats = response1.data;
+    console.log(availableSeats)
+
+    if (availableSeats[0].count < seats.length) {
+      return "Full";
+    }
+
     const data = {
       customer_id: cusID,
       showtime_id: showID,
