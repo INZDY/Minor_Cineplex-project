@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Axios from "axios";
 import UpdateButton from "./EditMovLicen";
+import { convertDate } from "../../components/UtilFunctions";
 
 function MovLicen() {
   const [licStart, setLicStart] = useState("");
@@ -165,6 +166,7 @@ function MovLicen() {
           <table className="table">
             <thead>
               <tr>
+                <th scope="col">License ID</th>
                 <th scope="col">Movie ID</th>
                 <th scope="col">License Start</th>
                 <th scope="col">License End</th>
@@ -177,9 +179,8 @@ function MovLicen() {
                   <tr>
                     <th>{val["license_id"]}</th>
                     <th>{val["movie_id"]}</th>
-                    <th>{val["license_start"]}</th>
-                    <th>{val["license_end"]}</th>
-                    <th>{val["license_end"]}</th>
+                    <th>{convertDate(val["license_start"])}</th>
+                    <th>{convertDate(val["license_end"])}</th>
                     <th>{val["movie_cost"]}</th>
                     <th>
                       <UpdateButton

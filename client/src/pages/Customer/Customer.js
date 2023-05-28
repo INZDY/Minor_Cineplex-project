@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Axios from "axios";
 import UpdateButton from "./EditCustomer";
+import { convertDate } from "../../components/UtilFunctions";
 
 function Customer() {
   const [fname, setFname] = useState("");
@@ -226,7 +227,7 @@ function Customer() {
                     <th>{val["customer_citizen_id"]}</th>
                     <th>{val["customer_address"]}</th>
                     <th>{val["customer_gender"]}</th>
-                    <th>{val["customer_DOB"]}</th>
+                    <th>{convertDate(val["customer_DOB"])}</th>
                     <th>{val["type_name"]}</th>
                     <th>
                       <UpdateButton

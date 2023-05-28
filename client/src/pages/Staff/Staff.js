@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Axios from "axios";
 import UpdateButton from "./EditStaff";
+import { convertDate } from "../../components/UtilFunctions";
 
 function Staff() {
   const [fname, setFname] = useState("");
@@ -266,7 +267,7 @@ function Staff() {
                     <th>{val["staff_citizen_id"]}</th>
                     <th>{val["staff_address"]}</th>
                     <th>{val["staff_gender"]}</th>
-                    <th>{val["staff_DOB"]}</th>
+                    <th>{convertDate(val["staff_DOB"])}</th>
                     <th>
                       <UpdateButton
                         id={val["staff_id"]}
