@@ -20,13 +20,13 @@ function UpdateButton(props) {
     let data = [...genre];
     data[index] = event.target.value;
     setGenre(data);
-    console.log(genre);
+    //console.log(genre);
   };
 
   const addFields = () => {
     let newField = "";
     setGenre([...genre, newField]);
-    // console.log(genre);
+    // //console.log(genre);
   };
 
   const removeFields = (index) => {
@@ -43,7 +43,7 @@ function UpdateButton(props) {
       content_rating: crating,
       length: length,
       score_rating: srating,
-      movie_status: null
+      movie_status: null,
     });
 
     await Axios.delete(`http://localhost:3001/delete_moviegenre/${id}`);
@@ -155,7 +155,6 @@ function UpdateButton(props) {
           >
             Add More Genre
           </button>
-
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

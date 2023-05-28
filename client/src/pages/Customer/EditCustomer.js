@@ -32,7 +32,7 @@ function UpdateButton(props) {
       customer_DOB: DOB,
       type_name: type,
     });
-    console.log("GOGOGOG");
+    //console.log("GOGOGOG");
   };
 
   return (

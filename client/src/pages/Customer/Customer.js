@@ -20,7 +20,7 @@ function Customer() {
     Axios.get("http://localhost:3001/customer").then((response) => {
       setCustomerList(response.data);
     });
-    console.log(customerList);
+    //console.log(customerList);
   };
 
   const addCustomer = () => {
@@ -50,7 +50,7 @@ function Customer() {
         },
       ]);
     });
-    console.log(customerList);
+    //console.log(customerList);
   };
 
   const deleteCustomer = (id) => {

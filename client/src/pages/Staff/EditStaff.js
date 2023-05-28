@@ -36,7 +36,7 @@ function UpdateButton(props) {
       staff_gender: gender,
       staff_DOB: DOB,
     });
-    console.log("GOGOGOG");
+    //console.log("GOGOGOG");
   };
 
   return (

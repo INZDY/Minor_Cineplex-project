@@ -34,7 +34,7 @@ function MovLicen() {
       const end = new Date(val["license_end"]);
       let status = null;
 
-      // console.log(currDate, start, end);
+      // //console.log(currDate, start, end);
       if (end < currDate) {
         status = "expired";
       } else if (start > currDate) {
@@ -63,7 +63,7 @@ function MovLicen() {
     const end = new Date(licEnd);
     let status = null;
 
-    // console.log(currDate, start, end);
+    // //console.log(currDate, start, end);
     if (end < currDate) {
       status = "expired";
     } else if (start > currDate) {

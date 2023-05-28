@@ -22,7 +22,7 @@ function Staff() {
     Axios.get("http://localhost:3001/staff").then((response) => {
       setStaffList(response.data);
     });
-    console.log(staffList);
+    //console.log(staffList);
   };
 
   const addStaff = () => {
@@ -56,7 +56,7 @@ function Staff() {
         },
       ]);
     });
-    console.log(staffList);
+    //console.log(staffList);
   };
 
   const deleteStaff = (id) => {

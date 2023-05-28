@@ -13,7 +13,7 @@ function Memtype() {
     Axios.get("http://localhost:3001/memtype").then((response) => {
       setMemtypeList(response.data);
     });
-    console.log(memtypeList);
+    //console.log(memtypeList);
   };
 
   const addMemtype = () => {
@@ -29,7 +29,7 @@ function Memtype() {
         },
       ]);
     });
-    console.log(memtypeList);
+    //console.log(memtypeList);
   };
 
   const deleteMemtype = (name) => {

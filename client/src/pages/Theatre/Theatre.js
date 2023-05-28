@@ -15,7 +15,7 @@ function Theatre() {
     Axios.get("http://localhost:3001/theatre").then((response) => {
       setTheatreList(response.data);
     });
-    console.log(theatreList);
+    //console.log(theatreList);
   };
 
   const addTheatre = () => {
@@ -35,7 +35,7 @@ function Theatre() {
         },
       ]);
     });
-    console.log(theatreList);
+    //console.log(theatreList);
   };
 
   const deleteTheatre = (id) => {
@@ -166,8 +166,6 @@ function Theatre() {
           </table>
         </div>
       </div>
-
-
 
       <div className="theatreButton">
         <br />

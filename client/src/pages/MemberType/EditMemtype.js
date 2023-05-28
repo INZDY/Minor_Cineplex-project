@@ -14,10 +14,10 @@ function UpdateButton(props) {
 
   const editMemtype = (old_name) => {
     Axios.put(`http://localhost:3001/edit_memtype/${old_name}`, {
-        type_name: name,
-        discount_price: price,
+      type_name: name,
+      discount_price: price,
     });
-    console.log("GOGOGOG");
+    //console.log("GOGOGOG");
   };
 
   return (
@@ -63,7 +63,6 @@ function UpdateButton(props) {
               }}
             />
           </div>
-
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

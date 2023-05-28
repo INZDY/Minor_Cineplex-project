@@ -18,7 +18,7 @@ function Showtime() {
   const getShowtime = async () => {
     //Get ALL Showtimes
     await Axios.get("http://localhost:3001/showtime").then((response) => {
-      //   console.log(response.data);
+      //   //console.log(response.data);
       setShowtimeList(response.data);
     });
 

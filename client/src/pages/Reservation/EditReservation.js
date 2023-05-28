@@ -19,13 +19,13 @@ function UpdateButton(props) {
     let data = [...seat];
     data[index] = event.target.value;
     setSeat(data);
-    // console.log(genre);
+    // //console.log(genre);
   };
 
   const addFields = () => {
     let newField = "";
     setSeat([...seat, newField]);
-    // console.log(genre);
+    // //console.log(genre);
   };
 
   const removeFields = (index) => {

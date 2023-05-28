@@ -22,7 +22,7 @@ function UpdateButton(props) {
       branch_tel: tel,
       branch_email: email,
     });
-    console.log("GOGOGOG");
+    //console.log("GOGOGOG");
   };
 
   return (

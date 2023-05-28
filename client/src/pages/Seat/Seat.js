@@ -19,14 +19,14 @@ function Seat() {
     let data = [...inputFields];
     data[index][event.target.name] = event.target.value;
     setInputFields(data);
-    // console.log(inputFields);
-    // console.log(theatreID, date);
+    // //console.log(inputFields);
+    // //console.log(theatreID, date);
   };
 
   const addFields = () => {
     let newField = { no: "", type: "", price: 0, staff: 0 };
     setInputFields([...inputFields, newField]);
-    // console.log(inputFields);
+    // //console.log(inputFields);
   };
 
   const removeFields = (index) => {
@@ -42,16 +42,16 @@ function Seat() {
     await Axios.get("http://localhost:3001/seatdetails").then((response) => {
       setSeatDetailList(response.data);
     });
-    // console.log(seatDetailList);
+    // //console.log(seatDetailList);
 
-    // console.log(seatList.map(item => item.seat_id))
+    // //console.log(seatList.map(item => item.seat_id))
     // const seatIDs = seatList.map(item => item.seat_id)
 
     //get ALL, MOST RECENT seathistory
     await Axios.get("http://localhost:3001/seathistory").then((response) => {
       setSeatHistoryList(response.data);
     });
-    // console.log(seatHistoryList);
+    // //console.log(seatHistoryList);
 
     //map both of these
     const temp = seatDetailList.map((item, index) => {
@@ -67,7 +67,7 @@ function Seat() {
       };
     });
     setSeatList(temp);
-    // console.log(seatList);
+    // //console.log(seatList);
   };
   /////
 
@@ -83,7 +83,7 @@ function Seat() {
       );
 
       const ID = response.data.insertId;
-      // console.log(ID);
+      // //console.log(ID);
 
       await Axios.post("http://localhost:3001/add_seathistory", {
         seat_id: ID,
@@ -93,7 +93,7 @@ function Seat() {
       });
     });
 
-    // console.log(seatDetailList);
+    // //console.log(seatDetailList);
   };
 
   const deleteSeat = (id) => {

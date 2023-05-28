@@ -20,13 +20,13 @@ function MovRegis() {
     let data = [...genre];
     data[index] = event.target.value;
     setGenre(data);
-    console.log(genre);
+    //console.log(genre);
   };
 
   const addFields = () => {
     let newField = "";
     setGenre([...genre, newField]);
-    // console.log(genre);
+    // //console.log(genre);
   };
 
   const removeFields = (index) => {
@@ -40,13 +40,13 @@ function MovRegis() {
     //Get ALL Movies
     await Axios.get("http://localhost:3001/movielist").then((response) => {
       setMovList(response.data);
-      // console.log(movList)
+      // //console.log(movList)
     });
 
     //Get GENRES
     await Axios.get("http://localhost:3001/moviegenre").then((response) => {
       setMovGenre(response.data);
-      // console.log(movGenre)
+      // //console.log(movGenre)
     });
 
     //MOVIES + GENRES
@@ -58,7 +58,7 @@ function MovRegis() {
     });
 
     setMovies(movie_genres);
-    // console.log(movies)
+    // //console.log(movies)
   };
 
   const addMovies = async () => {
@@ -75,7 +75,7 @@ function MovRegis() {
       data
     );
     const ID = response1.data.insertId;
-    console.log(ID);
+    //console.log(ID);
 
     genre.map(async (val) => {
       await Axios.post("http://localhost:3001/add_moviegenre", {

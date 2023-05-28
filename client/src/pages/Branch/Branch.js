@@ -15,7 +15,7 @@ function Branch() {
     Axios.get("http://localhost:3001/branch").then((response) => {
       setBranchList(response.data);
     });
-    console.log(branchList);
+    //console.log(branchList);
   };
 
   const addBranch = () => {
@@ -35,7 +35,7 @@ function Branch() {
         },
       ]);
     });
-    console.log(branchList);
+    //console.log(branchList);
   };
 
   const deleteBranch = (id) => {

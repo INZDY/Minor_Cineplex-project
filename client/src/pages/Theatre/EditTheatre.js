@@ -22,7 +22,7 @@ function UpdateButton(props) {
       capacity: capacity,
       theatre_type: type,
     });
-    console.log("GOGOGOG");
+    //console.log("GOGOGOG");
   };
 
   return (
@@ -41,7 +41,7 @@ function UpdateButton(props) {
           <Modal.Title>Edit Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <div className="mb-3">
+          <div className="mb-3">
             <label htmlFor="theatre_no" className="form-label">
               Theatre No.
             </label>

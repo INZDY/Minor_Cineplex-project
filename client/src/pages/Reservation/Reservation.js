@@ -19,13 +19,13 @@ function Reservation() {
     let data = [...seats];
     data[index] = event.target.value;
     setSeats(data);
-    // console.log(seats);
+    // //console.log(seats);
   };
 
   const addFields = () => {
     let newField = "";
     setSeats([...seats, newField]);
-    // console.log(genre);
+    // //console.log(genre);
   };
 
   const removeFields = (index) => {
@@ -39,7 +39,7 @@ function Reservation() {
     //Get RESERVED SEATS with price
     await Axios.get("http://localhost:3001/reservedseats").then((response) => {
       setResSeats(response.data);
-      //   console.log(resSeats);
+      //   //console.log(resSeats);
     });
 
     //UPDATE TOTAL PRICE
@@ -66,7 +66,7 @@ function Reservation() {
     //Get ALL RESERVES
     await Axios.get("http://localhost:3001/reservation").then((response) => {
       setResList(response.data);
-      //   console.log(resList);
+      //   //console.log(resList);
     });
 
     //RESERVATION + SEATS
@@ -83,7 +83,7 @@ function Reservation() {
     });
 
     setReserves(reserve_seats);
-    // console.log(reserve_seats);
+    // //console.log(reserve_seats);
   };
 
   const addReserves = async () => {
@@ -98,7 +98,7 @@ function Reservation() {
       data
     );
     const ID = response.data.insertId;
-    // console.log(ID);
+    // //console.log(ID);
 
     seats.map(async (val) => {
       await Axios.post("http://localhost:3001/add_reservedseats", {
