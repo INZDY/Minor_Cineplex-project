@@ -80,7 +80,7 @@ export const SidebarData = [
   {
     title: "Analysis Report",
     path: "/analysis",
-    icon: <TbIcons.TbReportAnalytics />,
+    icon: <MdIcons.MdAddchart />,
     cName: "nav-text",
   },
 ];

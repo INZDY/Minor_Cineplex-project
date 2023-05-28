@@ -12,6 +12,7 @@ import MovRegis from "./pages/MovRegis/MovRegis";
 import MovLicen from "./pages/MovLicen/MovLicen";
 import Showtime from "./pages/Showtime/Showtime";
 import Reservation from "./pages/Reservation/Reservation";
+import Analysis from "./pages/Analysis/Analysis.js";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/movielicense" element={<MovLicen />} />
           <Route path="/showtime" element={<Showtime />} />
           <Route path="/reservation" element={<Reservation />} />
+          <Route path="/analysis" element={<Analysis />} />
         </Routes>
       </Router>
     </>
