@@ -43,77 +43,133 @@ function Theatre() {
   };
 
   return (
-    <div className="theatre">
-      <h1>Theatre Information</h1>
-      <br />
-      <div className="theatreInformation">
-        <form action="">
-          <div className="mb-3">
-            <label htmlFor="theatre_no" className="form-label">
-              Theatre No.
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              placeholder="Enter theatre no."
-              onChange={(event) => {
-                setNo(event.target.value);
-              }}
-            />
-          </div>
+    <div className="pagecontainer">
+      <div className="theatre">
+        <h1>Theatre Information</h1>
+        <br />
+        <div className="theatreInformation">
+          <form action="">
+            <div className="mb-3">
+              <label htmlFor="theatre_no" className="form-label">
+                Theatre No.
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Enter theatre no."
+                onChange={(event) => {
+                  setNo(event.target.value);
+                }}
+              />
+            </div>
 
-          <div className="mb-3">
-            <label htmlFor="branch_id" className="form-label">
-              Branch ID
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              placeholder="Enter branch id"
-              onChange={(event) => {
-                setBranchID(event.target.value);
-              }}
-            />
-          </div>
+            <div className="mb-3">
+              <label htmlFor="branch_id" className="form-label">
+                Branch ID
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Enter branch id"
+                onChange={(event) => {
+                  setBranchID(event.target.value);
+                }}
+              />
+            </div>
 
-          <div className="mb-3">
-            <label htmlFor="capacity" className="form-label">
-              Capacity
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              placeholder="Enter capacity"
-              onChange={(event) => {
-                setCapacity(event.target.value);
-              }}
-            />
-          </div>
+            <div className="mb-3">
+              <label htmlFor="capacity" className="form-label">
+                Capacity
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Enter capacity"
+                onChange={(event) => {
+                  setCapacity(event.target.value);
+                }}
+              />
+            </div>
 
-          <div className="mb-3">
-            <label htmlFor="type" className="form-label">
-              Theatre Type
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter type"
-              onChange={(event) => {
-                setType(event.target.value);
-              }}
-            />
-          </div>
+            <div className="mb-3">
+              <label htmlFor="type" className="form-label">
+                Theatre Type
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter type"
+                onChange={(event) => {
+                  setType(event.target.value);
+                }}
+              />
+            </div>
 
-          <button className="btn btn-success" onClick={addTheatre}>
-            Add Theatre
-          </button>
-        </form>
+            <button className="btn btn-success" onClick={addTheatre}>
+              Add Theatre
+            </button>
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={getTheatres}
+            >
+              Refresh Theatre List
+            </button>
+          </form>
+        </div>
+        <hr />
       </div>
-      <hr />
+      <div className="refreshButton">
+        <div className="table-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Theatre ID</th>
+                <th scope="col">Theatre No.</th>
+                <th scope="col">Branch ID</th>
+                <th scope="col">Capacity</th>
+                <th scope="col">Theatre Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {theatreList.map((val, key) => {
+                return (
+                  <tr>
+                    <th>{val["theatre_id"]}</th>
+                    <th>{val["theatre_no"]}</th>
+                    <th>{val["branch_id"]}</th>
+                    <th>{val["capacity"]}</th>
+                    <th>{val["theatre_type"]}</th>
+                    <th>
+                      <UpdateButton
+                        id={val["theatre_id"]}
+                        theatre_no={val["theatre_no"]}
+                        branch_id={val["branch_id"]}
+                        capacity={val["capacity"]}
+                        type={val["theatre_type"]}
+                      />
+                    </th>
+                    <th>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => {
+                          deleteTheatre(val["theatre_id"]);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </th>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+
       <div className="theatreButton">
-        <button className="btn btn-primary" onClick={getTheatres}>
-          Refresh Theatre List
-        </button>
         <br />
         <br />
         {theatreList.map((val, key) => {

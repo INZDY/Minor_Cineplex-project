@@ -194,7 +194,7 @@ function MovLicen() {
                       <button
                         className="btn btn-danger btn-sm"
                         onClick={() => {
-                          deleteLicense(val["customer_id"]);
+                          deleteLicense(val["license_id"]);
                         }}
                       >
                         Delete

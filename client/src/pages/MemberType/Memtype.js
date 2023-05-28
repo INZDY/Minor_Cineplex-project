@@ -110,7 +110,7 @@ function Memtype() {
                       <button
                         className="btn btn-danger btn-sm"
                         onClick={() => {
-                          deleteMemtype(val["customer_id"]);
+                          deleteMemtype(val["type_name"]);
                         }}
                       >
                         Delete

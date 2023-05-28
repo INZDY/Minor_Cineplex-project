@@ -101,149 +101,167 @@ function Seat() {
   };
 
   return (
-    <div className="seat">
-      <h1>Seat Information</h1>
-      <br />
-      <div className="seatInformation">
-        <form action="">
-          {/* theatre id , date*/}
-          <div className="mb-3">
-            <label htmlFor="theatre_id" className="form-label">
-              Theatre ID
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              placeholder="Enter theatre id"
-              onChange={(event) => {
-                setTheatreID(event.target.value);
-              }}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="date" className="form-label">
-              Date
-            </label>
-            <input
-              type="date"
-              className="form-control"
-              placeholder="Enter date"
-              onChange={(event) => {
-                setDate(event.target.value);
-              }}
-            />
-          </div>
-
-          {/* label */}
-          <div className="mb-3">
-            <label htmlFor="seat_no" className="form-label">
-              Seat No.
-            </label>
-            <label htmlFor="seat_type" className="form-label">
-              Seat Type
-            </label>
-            <label htmlFor="price" className="form-label">
-              Price
-            </label>
-            <label htmlFor="staff_id" className="form-label">
-              Staff ID
-            </label>
-          </div>
-
-          {/* seat details */}
-          {inputFields.map((input, index) => {
-            return (
-              <div className="mb-3" key={index}>
-                <input
-                  name="no"
-                  type="text"
-                  className="form-control multi-row"
-                  placeholder="Enter seat no"
-                  onChange={(event) => handleFormChange(index, event)}
-                />
-                <input
-                  name="type"
-                  type="text"
-                  className="form-control multi-row"
-                  placeholder="Enter seat type"
-                  onChange={(event) => handleFormChange(index, event)}
-                />
-                <input
-                  name="price"
-                  type="number"
-                  className="form-control multi-row"
-                  placeholder="Enter seat price"
-                  onChange={(event) => handleFormChange(index, event)}
-                />
-                <input
-                  name="staff"
-                  type="number"
-                  className="form-control multi-row"
-                  placeholder="Enter staff id"
-                  onChange={(event) => handleFormChange(index, event)}
-                />
-                <button
-                  className="btn btn-secondary"
-                  type="button"
-                  onClick={removeFields}
-                >
-                  Remove
-                </button>
-              </div>
-            );
-          })}
-          <button
-            className="btn btn-secondary"
-            type="button"
-            onClick={addFields}
-          >
-            Add More Seat
-          </button>
-          <br />
-          <br />
-          <button className="btn btn-success" type="button" onClick={addSeat}>
-            Add Seat
-          </button>
-        </form>
-      </div>
-      <hr />
-      <div className="seatButton">
-        <button className="btn btn-primary" onClick={getSeats}>
-          Refresh Seat List
-        </button>
+    <div className="pagecontainer">
+      <div className="seat">
+        <h1>Seat Information</h1>
         <br />
-        <br />
-        {seatList.map((val, key) => {
-          return (
-            <div className="seats card">
-              <div className="card-body text-left">
-                <p className="card-text">Theatre ID: {val["theatre_id"]}</p>
-                {/* <p className="card-text">Seat ID: {val["seat_id"]}</p> */}
-                <p className="card-text">Seat No: {val["seat_no"]}</p>
-                <p className="card-text">Seat Type: {val["seat_type"]}</p>
-                <p className="card-text">Price: {val["price"]}</p>
-                <br />
-
-                {/* UPDATE BUTTON */}
-                <UpdateButton
-                  id={val["seat_id"]}
-                  theatreID={val["theatre_id"]}
-                  seatNO={val["seat_no"]}
-                  type={val["seat_type"]}
-                  price={val["price"]}
-                />
-                <button
-                  className="btn btn-danger"
-                  onClick={() => {
-                    deleteSeat(val["seat_id"]);
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
+        <div className="seatInformation">
+          <form action="">
+            {/* theatre id , date*/}
+            <div className="mb-3">
+              <label htmlFor="theatre_id" className="form-label">
+                Theatre ID
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Enter theatre id"
+                onChange={(event) => {
+                  setTheatreID(event.target.value);
+                }}
+              />
             </div>
-          );
-        })}
+            <div className="mb-3">
+              <label htmlFor="date" className="form-label">
+                Date
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                placeholder="Enter date"
+                onChange={(event) => {
+                  setDate(event.target.value);
+                }}
+              />
+            </div>
+
+            {/* label */}
+            <div className="mb-3">
+              <label htmlFor="seat_no" className="form-label">
+                Seat No.
+              </label>
+              <label htmlFor="seat_type" className="form-label">
+                Seat Type
+              </label>
+              <label htmlFor="price" className="form-label">
+                Price
+              </label>
+              <label htmlFor="staff_id" className="form-label">
+                Staff ID
+              </label>
+            </div>
+
+            {/* seat details */}
+            {inputFields.map((input, index) => {
+              return (
+                <div className="mb-3" key={index}>
+                  <input
+                    name="no"
+                    type="text"
+                    className="form-control multi-row"
+                    placeholder="Enter seat no"
+                    onChange={(event) => handleFormChange(index, event)}
+                  />
+                  <input
+                    name="type"
+                    type="text"
+                    className="form-control multi-row"
+                    placeholder="Enter seat type"
+                    onChange={(event) => handleFormChange(index, event)}
+                  />
+                  <input
+                    name="price"
+                    type="number"
+                    className="form-control multi-row"
+                    placeholder="Enter seat price"
+                    onChange={(event) => handleFormChange(index, event)}
+                  />
+                  <input
+                    name="staff"
+                    type="number"
+                    className="form-control multi-row"
+                    placeholder="Enter staff id"
+                    onChange={(event) => handleFormChange(index, event)}
+                  />
+                  <button
+                    className="btn btn-secondary"
+                    type="button"
+                    onClick={removeFields}
+                  >
+                    Remove
+                  </button>
+                </div>
+              );
+            })}
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={addFields}
+            >
+              Add More Seat
+            </button>
+            <br />
+            <br />
+            <button className="btn btn-success" type="button" onClick={addSeat}>
+              Add Seat
+            </button>
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={getSeats}
+            >
+              Refresh Seat List
+            </button>
+          </form>
+        </div>
+        <hr />
+      </div>
+      <div className="refreshButton">
+        <div className="table-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Seat ID</th>
+                <th scope="col">Theatre ID</th>
+                <th scope="col">Seat No</th>
+                <th scope="col">Seat Type</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {seatList.map((val, key) => {
+                return (
+                  <tr>
+                    <th>{val["seat_id"]}</th>
+                    <th>{val["theatre_id"]}</th>
+                    <th>{val["seat_no"]}</th>
+                    <th>{val["seat_type"]}</th>
+                    <th>{val["price"]}</th>
+                    <th>
+                      <UpdateButton
+                        id={val["seat_id"]}
+                        theatreID={val["theatre_id"]}
+                        seatNO={val["seat_no"]}
+                        type={val["seat_type"]}
+                        price={val["price"]}
+                      />
+                    </th>
+                    <th>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => {
+                          deleteSeat(val["seat_id"]);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </th>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

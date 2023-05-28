@@ -246,7 +246,7 @@ function MovRegis() {
                       <button
                         className="btn btn-danger btn-sm"
                         onClick={() => {
-                          deleteMovies(val["customer_id"]);
+                          deleteMovies(val["movie_id"]);
                         }}
                       >
                         Delete

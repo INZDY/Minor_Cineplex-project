@@ -250,7 +250,7 @@ function Reservation() {
                       <button
                         className="btn btn-danger btn-sm"
                         onClick={() => {
-                          deleteReserves(val["customer_id"]);
+                          deleteReserves(val["reserve_id"]);
                         }}
                       >
                         Delete
