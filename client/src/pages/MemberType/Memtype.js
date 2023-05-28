@@ -37,77 +37,91 @@ function Memtype() {
   };
 
   return (
-    <div className="memtype">
-      <h1>Memtype Information</h1>
-      <br />
-      <div className="memtypeInformation">
-        <form action="">
-
-          <div className="mb-3">
-            <label htmlFor="type_name" className="form-label">
-              Type Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter type name"
-              onChange={(event) => {
-                setName(event.target.value);
-              }}
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="discount_price" className="form-label">
-              Discount Price
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              placeholder="Enter discount price"
-              onChange={(event) => {
-                setPrice(event.target.value);
-              }}
-            />
-          </div>
-
-          <button className="btn btn-success" onClick={addMemtype}>
-            Add Memtype
-          </button>
-        </form>
-      </div>
-      <hr />
-      <div className="memtypeButton">
-        <button className="btn btn-primary" onClick={getMemtypes}>
-          Refresh Memtype List
-        </button>
+    <div className="pagecontainer">
+      <div className="memtype">
+        <h1>Memtype Information</h1>
         <br />
-        <br />
-        {memtypeList.map((val, key) => {
-          return (
-            <div className="memtypes card">
-              <div className="card-body text-left">
-                <p className="card-text">Type Name: {val["type_name"]}</p>
-                <p className="card-text">Discount Price: {val["discount_price"]}</p>
-                <br />
-
-                {/* UPDATE BUTTON */}
-                <UpdateButton
-                  name={val["type_name"]}
-                  price={val["discount_price"]}
-                />
-                <button
-                  className="btn btn-danger"
-                  onClick={() => {
-                    deleteMemtype(val["type_name"]);
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
+        <div className="memtypeInformation">
+          <form action="">
+            <div className="mb-3">
+              <label htmlFor="type_name" className="form-label">
+                Type Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter type name"
+                onChange={(event) => {
+                  setName(event.target.value);
+                }}
+              />
             </div>
-          );
-        })}
+
+            <div className="mb-3">
+              <label htmlFor="discount_price" className="form-label">
+                Discount Price
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Enter discount price"
+                onChange={(event) => {
+                  setPrice(event.target.value);
+                }}
+              />
+            </div>
+
+            <button className="btn btn-success" onClick={addMemtype}>
+              Add Memtype
+            </button>
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={getMemtypes}
+            >
+              Refresh Memtype List
+            </button>
+          </form>
+        </div>
+        <hr />
+      </div>
+      <div className="refreshButton">
+        <div className="table-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Type Name</th>
+                <th scope="col">Discount Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {memtypeList.map((val, key) => {
+                return (
+                  <tr>
+                    <th>{val["type_name"]}</th>
+                    <th>{val["discount_price"]}</th>
+                    <th>
+                      <UpdateButton
+                        name={val["type_name"]}
+                        price={val["discount_price"]}
+                      />
+                    </th>
+                    <th>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => {
+                          deleteMemtype(val["customer_id"]);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </th>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

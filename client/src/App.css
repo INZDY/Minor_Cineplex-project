@@ -7,6 +7,14 @@
   /* font */
 }
 
+.pagecontainer{
+  display: flex;
+  flex-direction: column;
+  padding: 0px 0px 50px 0px;
+  /* height: 100vh; */
+  background-color: #eecd80;
+}
+
 .home, 
 .customer, 
 .staff, 
@@ -22,15 +30,20 @@
   /* margin: 175px; */
   /* margin-top: 25px; */
   /* padding: 100px; */
-  padding: 275px;
-  padding-top: 50px;
+  padding: 50px 275px 25px;
+  /* padding-top: 50px; */
   /* height: 60vh; */
   /* border-style: solid; */
   align-items: left;
   flex-direction: column;
   justify-content: center;
   font-size: 1rem;
-  background-color: #eecd80;
+}
+
+.refreshButton{
+  margin: 0px 80px;
+  padding: 0px 20px;
+  background-color: #ffefcb;
 }
 
 .home{

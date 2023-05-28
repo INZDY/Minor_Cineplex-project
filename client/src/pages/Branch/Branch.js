@@ -23,15 +23,15 @@ function Branch() {
       branch_name: name,
       address: address,
       branch_tel: tel,
-      branch_email: email
+      branch_email: email,
     }).then(() => {
       setBranchList([
         ...branchList,
         {
-            branch_name: name,
-            address: address,
-            branch_tel: tel,
-            branch_email: email
+          branch_name: name,
+          address: address,
+          branch_tel: tel,
+          branch_email: email,
         },
       ]);
     });
@@ -43,110 +43,126 @@ function Branch() {
   };
 
   return (
-    <div className="branch">
-      <h1>Branch Information</h1>
-      <br />
-      <div className="branchInformation">
-        <form action="">
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter name"
-              onChange={(event) => {
-                setName(event.target.value);
-              }}
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="address" className="form-label">
-              Address
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter address"
-              onChange={(event) => {
-                setAddress(event.target.value);
-              }}
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="tel" className="form-label">
-              Tel No.
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter tel no."
-              onChange={(event) => {
-                setTel(event.target.value);
-              }}
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter email"
-              onChange={(event) => {
-                setEmail(event.target.value);
-              }}
-            />
-          </div>
-          
-          <button className="btn btn-success" onClick={addBranch}>
-            Add Branch
-          </button>
-        </form>
-      </div>
-      <hr />
-      <div className="branchButton">
-        <button className="btn btn-primary" onClick={getBranchs}>
-          Refresh Branch List
-        </button>
+    <div className="pagecontainer">
+      <div className="branch">
+        <h1>Branch Information</h1>
         <br />
-        <br />
-        {branchList.map((val, key) => {
-          return (
-            <div className="branchs card">
-              <div className="card-body text-left">
-                <p className="card-text">ID: {val["branch_id"]}</p>
-                <p className="card-text">Name: {val["branch_name"]}</p>
-                <p className="card-text">Address: {val["address"]}</p>
-                <p className="card-text">Mobile No.: {val["branch_tel"]}</p>
-                <p className="card-text">Email: {val["branch_email"]}</p>
-                <br />
-
-                {/* UPDATE BUTTON */}
-                <UpdateButton
-                  id={val["branch_id"]}
-                  name={val["branch_name"]}
-                  address={val["address"]}
-                  tel={val["branch_tel"]}
-                  email={val["branch_email"]}
-                />
-                <button
-                  className="btn btn-danger"
-                  onClick={() => {
-                    deleteBranch(val["branch_id"]);
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
+        <div className="branchInformation">
+          <form action="">
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">
+                Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter name"
+                onChange={(event) => {
+                  setName(event.target.value);
+                }}
+              />
             </div>
-          );
-        })}
+
+            <div className="mb-3">
+              <label htmlFor="address" className="form-label">
+                Address
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter address"
+                onChange={(event) => {
+                  setAddress(event.target.value);
+                }}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="tel" className="form-label">
+                Tel No.
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter tel no."
+                onChange={(event) => {
+                  setTel(event.target.value);
+                }}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">
+                Email
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter email"
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                }}
+              />
+            </div>
+
+            <button className="btn btn-success" onClick={addBranch}>
+              Add Branch
+            </button>
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={getBranchs}
+            >
+              Refresh Branch List
+            </button>
+          </form>
+        </div>
+        <hr />
+      </div>
+      <div className="refreshButton">
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">Branch ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Address</th>
+              <th scope="col">Mobile No</th>
+              <th scope="col">Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {branchList.map((val, key) => {
+              return (
+                <tr>
+                  <th>{val["branch_id"]}</th>
+                  <th>{val["branch_name"]}</th>
+                  <th>{val["address"]}</th>
+                  <th>{val["branch_tel"]}</th>
+                  <th>{val["branch_email"]}</th>
+                  <th>
+                    <UpdateButton
+                      id={val["branch_id"]}
+                      name={val["branch_name"]}
+                      address={val["address"]}
+                      tel={val["branch_tel"]}
+                      email={val["branch_email"]}
+                    />
+                  </th>
+                  <th>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => {
+                        deleteBranch(val["branch_id"]);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </th>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
