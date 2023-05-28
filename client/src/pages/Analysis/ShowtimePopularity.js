@@ -80,7 +80,7 @@ export default function () {
               </th>
               <th className="col">
                 {" "}
-                <h3>Amount</h3>
+                <h3>Revenue<br />(From this showtime)</h3>
               </th>
               <th className="col">
                 {" "}

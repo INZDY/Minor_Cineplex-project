@@ -79,19 +79,19 @@ export default function () {
               </th>
               <th className="col">
                 {" "}
-                <h5>Amount (Thoundsand unit)</h5>
+                <h5>Amount<br />(No. of Seats)</h5>
               </th>
               <th className="col">
                 {" "}
-                <h5>Last month amount (Thoundsand unit)</h5>
+                <h5>Last month amount<br />(No. of Seats)</h5>
               </th>
               <th className="col">
                 {" "}
-                <h5>Gain/Loss (Amount)</h5>
+                <h5>Gain/Loss<br />(Amount)</h5>
               </th>
               <th className="col">
                 {" "}
-                <h5>Gain/Loss (Percentage)</h5>
+                <h5>Gain/Loss %<br />(Percentage)</h5>
               </th>
             </tr>
           </thead>

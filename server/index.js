@@ -408,6 +408,23 @@ app.get("/seathistory", (req, res) => {
   );
 });
 
+app.get("/theatreseatcount/:theatre_id", (req, res) => {
+  const theaID = req.params.theatre_id;
+  db.query(
+    "SELECT t.capacity, COUNT(*) AS count \
+  FROM theatre t, seatdetails s \
+  WHERE t.theatre_id = ? AND s.theatre_id = ?",
+    [theaID, theaID],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
 //add
 app.post("/add_seatdetails", (req, res) => {
   const seatNO = req.body.seat_no;
@@ -1466,7 +1483,7 @@ app.get("/AnalysisSeatPop/:branch/:month", async (req, res) => {
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////// AanlysisAiring
+////////// AnalysisAiring
 
 app.get("/AnalysisAiring/:branch/:month", async (req, res) => {
   const branch = req.params.branch;
@@ -1474,7 +1491,7 @@ app.get("/AnalysisAiring/:branch/:month", async (req, res) => {
   if (branch == "all") {
     if (month == "all") {
       db.query(
-        "SELECT DISTINCT movies.title, moviegenre.genre, showtime.air_language, showtime.subtitle,\
+        "SELECT DISTINCT movies.title, showtime.air_language, showtime.subtitle,\
           (SELECT SUM(reservation.total_price)\
            FROM reservation\
            WHERE reservation.showtime_id = showtime.showtime_id) AS amount ,branch.branch_name\

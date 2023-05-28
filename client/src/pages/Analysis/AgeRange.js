@@ -84,7 +84,7 @@ export default function () {
                 </th>
                 <th className="col">
                   {" "}
-                  <h3>Amount</h3>
+                  <h3>Amount<br />(From the genre)</h3>
                 </th>
               </tr>
             </thead>

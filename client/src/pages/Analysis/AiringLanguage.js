@@ -38,7 +38,7 @@ export default function () {
       <div className="reports">
         {" "}
         {/* className should be change to something else .Punch*/}
-        <h1>Showtime popularity Analysis report</h1>
+        <h1>Airing Language Analysis report</h1>
         {Branch === "all" ? (
           <h2>
             Branch name : All branch {Month === "all" ? ", All month" : ""}
@@ -80,10 +80,6 @@ export default function () {
                 </th>
                 <th className="col">
                   {" "}
-                  <h3>Genre</h3>
-                </th>
-                <th className="col">
-                  {" "}
                   <h3>Airing Language</h3>
                 </th>
                 <th className="col">
@@ -92,7 +88,7 @@ export default function () {
                 </th>
                 <th className="col">
                   {" "}
-                  <h3>Amount</h3>
+                  <h3>Revenue<br/>(From specific dub/sub)</h3>
                 </th>
               </tr>
             </thead>
@@ -102,9 +98,6 @@ export default function () {
                   <tr className="row">
                     <th className="col">
                       <p>{val["title"]}</p>
-                    </th>
-                    <th className="col">
-                      <p>{val["genre"]}</p>
                     </th>
                     <th className="col">
                       <p>{val["air_language"]}</p>
