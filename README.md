@@ -1,9 +1,9 @@
 # Minor_Cineplex-project
 Movie theater database project for CPE241 Database systems.
 
-Requirements:
-node
-Minor_Cineplex sql database
+Requirements:  
+node  
+Minor_Cineplex sql database  
 
 Initialization:  
 Web App
