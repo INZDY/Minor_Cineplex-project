@@ -1,4 +1,5 @@
 # Minor_Cineplex-project
+https://github.com/INZDY/Minor_Cineplex-project  
 Movie theater database project for CPE241 Database systems.
 
 Requirements:  
