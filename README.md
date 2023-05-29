@@ -5,12 +5,12 @@ Requirements:
 node
 Minor_Cineplex sql database
 
-Initialization:
+Initialization:  
 Web App
 1) In terminal, cd into /client and run `npm start`
 2) In terminal, cd into /client and run `npm run dev`
 
-Database
+Database  
 Use database programs like XAMPP, MAMPP, or others to create database named `Minor_Cineplex`
 and import the sql file.
 
